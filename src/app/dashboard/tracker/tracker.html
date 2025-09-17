@@ -1,0 +1,216 @@
+   <main class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Development Tracker</h1>
+                <p class="text-gray-600">Monitor your children's growth, milestones, and health progress</p>
+            </div>
+            <div class="flex space-x-3">
+                <button class="bg-gradient-to-r from-blue-600 to-pink-600 text-white px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all duration-300">
+                    <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Add Record
+                </button>
+                <button class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                    Export Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Child Selector -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-900">Select Child</h2>
+                <span class="text-sm text-gray-500">2 children</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Emma - Active -->
+                <div class="flex items-center p-4 bg-gradient-to-r from-blue-50 to-pink-50 border-2 border-blue-200 rounded-xl cursor-pointer">
+                    <div class="w-12 h-12 bg-pink-200 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-lg font-bold text-pink-700">E</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Emma Johnson</h3>
+                        <p class="text-gray-600 text-sm">2 years old</p>
+                    </div>
+                    <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                </div>
+                
+                <!-- James -->
+                <div class="flex items-center p-4 bg-gray-50 border-2 border-gray-200 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
+                    <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mr-4">
+                        <span class="text-lg font-bold text-blue-700">J</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">James Johnson</h3>
+                        <p class="text-gray-600 text-sm">11 months old</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracker Tabs -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <!-- Tab Navigation -->
+            <div class="flex border-b border-gray-200">
+                <button class="px-6 py-4 text-blue-600 border-b-2 border-blue-600 font-medium">
+                    📈 Milestones
+                </button>
+                <button class="px-6 py-4 text-gray-500 hover:text-gray-700 font-medium">
+                    💉 Vaccines
+                </button>
+                <button class="px-6 py-4 text-gray-500 hover:text-gray-700 font-medium">
+                    📏 Growth
+                </button>
+            </div>
+
+            <!-- Milestones Tab Content -->
+            <div class="p-6">
+                <!-- Progress Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="text-center p-4 bg-blue-50 rounded-xl">
+                        <div class="text-2xl font-bold text-blue-600">12</div>
+                        <div class="text-sm text-gray-600">Total Milestones</div>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 rounded-xl">
+                        <div class="text-2xl font-bold text-green-600">3</div>
+                        <div class="text-sm text-gray-600">This Month</div>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 rounded-xl">
+                        <div class="text-2xl font-bold text-purple-600">85%</div>
+                        <div class="text-sm text-gray-600">On Track</div>
+                    </div>
+                    <div class="text-center p-4 bg-pink-50 rounded-xl">
+                        <div class="text-2xl font-bold text-pink-600">2</div>
+                        <div class="text-sm text-gray-600">Coming Up</div>
+                    </div>
+                </div>
+
+                <!-- Milestone Categories -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Physical Development -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            Physical Development
+                        </h3>
+
+                        <div class="space-y-3">
+                            <!-- Completed Milestone -->
+                            <div class="flex items-center p-4 bg-green-50 border border-green-200 rounded-xl">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">First Steps</h4>
+                                    <p class="text-sm text-gray-600">Achieved on March 10, 2024</p>
+                                </div>
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">Completed</span>
+                            </div>
+
+                            <!-- Completed Milestone -->
+                            <div class="flex items-center p-4 bg-green-50 border border-green-200 rounded-xl">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Climbing Stairs</h4>
+                                    <p class="text-sm text-gray-600">Achieved on February 15, 2024</p>
+                                </div>
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">Completed</span>
+                            </div>
+
+                            <!-- Upcoming Milestone -->
+                            <div class="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+                                <div class="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Running</h4>
+                                    <p class="text-sm text-gray-600">Expected by 30 months</p>
+                                </div>
+                                <span class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Upcoming</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language Development -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+                            <div class="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                            </div>
+                            Language Development
+                        </h3>
+
+                        <div class="space-y-3">
+                            <!-- Completed Milestone -->
+                            <div class="flex items-center p-4 bg-green-50 border border-green-200 rounded-xl">
+                                <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">First Words</h4>
+                                    <p class="text-sm text-gray-600">Achieved on January 5, 2024</p>
+                                </div>
+                                <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">Completed</span>
+                            </div>
+
+                            <!-- In Progress -->
+                            <div class="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                                    <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Two-Word Sentences</h4>
+                                    <p class="text-sm text-gray-600">In progress</p>
+                                </div>
+                                <span class="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">In Progress</span>
+                            </div>
+
+                            <!-- Upcoming Milestone -->
+                            <div class="flex items-center p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+                                <div class="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Asking Questions</h4>
+                                    <p class="text-sm text-gray-600">Expected by 36 months</p>
+                                </div>
+                                <span class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">Upcoming</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Milestone Button -->
+                <div class="mt-8 p-6 border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-blue-400 transition-colors cursor-pointer">
+                    <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Log New Milestone</h3>
+                    <p class="text-gray-600 mb-4">Record your child's latest achievement</p>
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                        Add Milestone
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>

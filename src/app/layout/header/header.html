@@ -1,0 +1,31 @@
+
+<div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a routerLink="/" class="flex items-center space-x-3">
+                    <img src="kidcare-icon.jpg" alt="KidCare" class="w-10 h-10 rounded-full">
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-pink-600 bg-clip-text text-transparent">KidCare</h1>
+                </a>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a routerlink ="/features" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Features</a>
+                    <a routerlink ="/howitworks" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">How it Works</a>
+                    <a routerlink ="/testimonials" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Reviews</a>
+                    <a routerlink ="/about" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">About</a>
+                </nav>
+
+                <!-- CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a routerlink ="/signin" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Sign In</a>
+                    <a routerlink ="/signup" class="bg-gradient-to-r from-blue-600 to-pink-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">Get Started Free</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>

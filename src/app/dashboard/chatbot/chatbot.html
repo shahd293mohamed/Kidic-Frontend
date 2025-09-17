@@ -1,0 +1,178 @@
+ <main class="container mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">AI Parenting Assistant</h1>
+            <p class="text-gray-600">Get instant guidance from our AI-powered parenting expert</p>
+        </div>
+
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Chat Area -->
+            <div class="lg:col-span-3">
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm h-[600px] flex flex-col">
+                    <div class="flex-shrink-0 border-b border-gray-200 p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center">🤖</div>
+                                <h2 class="text-lg font-semibold">KidCare AI Assistant</h2>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Online</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Messages -->
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                        <!-- Bot Message -->
+                        <div class="flex justify-start">
+                            <div class="flex items-start space-x-2 max-w-[80%]">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="text-sm">🤖</span>
+                                </div>
+                                <div class="bg-gray-100 rounded-lg p-3">
+                                    <p class="text-sm whitespace-pre-wrap">Hello! I'm your KidCare AI assistant. I'm here to help with any parenting questions you have. Feel free to ask about sleep, feeding, development, behavior, or any other concerns!</p>
+                                    <p class="text-xs text-gray-500 mt-1">10:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Message -->
+                        <div class="flex justify-end">
+                            <div class="flex items-start space-x-2 max-w-[80%] flex-row-reverse space-x-reverse">
+                                <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="text-sm">👤</span>
+                                </div>
+                                <div class="bg-blue-600 text-white rounded-lg p-3">
+                                    <p class="text-sm">My 18-month-old has been having trouble sleeping through the night. Any suggestions?</p>
+                                    <p class="text-xs text-blue-100 mt-1">10:32 AM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bot Response -->
+                        <div class="flex justify-start">
+                            <div class="flex items-start space-x-2 max-w-[80%]">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="text-sm">🤖</span>
+                                </div>
+                                <div class="bg-gray-100 rounded-lg p-3">
+                                    <p class="text-sm whitespace-pre-wrap">Sleep challenges at 18 months are very common! Here are some gentle strategies that often help:
+
+1. **Consistent bedtime routine** - Same activities in the same order every night
+2. **Check room environment** - Dark, cool (65-68°F), and quiet
+3. **Review nap schedule** - One nap around 12-1 PM, not too late
+4. **Comfort object** - A special blanket or stuffed animal
+
+How long has this been going on? Any recent changes in routine or environment?</p>
+                                    <p class="text-xs text-gray-500 mt-1">10:33 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Input -->
+                    <div class="flex-shrink-0 border-t border-gray-200 p-4">
+                        <div class="flex space-x-2">
+                            <input
+                                type="text"
+                                placeholder="Ask me anything about parenting..."
+                                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Quick Questions -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold flex items-center gap-2">
+                            💡 Quick Questions
+                        </h3>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <button class="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <span class="mr-2">💬</span>
+                                <span class="text-sm">How do I handle tantrums?</span>
+                            </div>
+                        </button>
+                        <button class="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <span class="mr-2">💬</span>
+                                <span class="text-sm">When should my child start potty training?</span>
+                            </div>
+                        </button>
+                        <button class="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <span class="mr-2">💬</span>
+                                <span class="text-sm">What foods should I avoid for babies?</span>
+                            </div>
+                        </button>
+                        <button class="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <span class="mr-2">💬</span>
+                                <span class="text-sm">My child has a fever, what should I do?</span>
+                            </div>
+                        </button>
+                        <button class="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center">
+                                <span class="mr-2">💬</span>
+                                <span class="text-sm">How can I encourage my toddler to eat vegetables?</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI Capabilities -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold flex items-center gap-2">
+                            🤖 I can help with
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="text-red-500">❤️</span>
+                                <span>Sleep & feeding concerns</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-blue-500">❤️</span>
+                                <span>Development milestones</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-green-500">❤️</span>
+                                <span>Behavioral guidance</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-purple-500">❤️</span>
+                                <span>Health & safety tips</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-orange-500">❤️</span>
+                                <span>Activity suggestions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200">
+                    <div class="p-4">
+                        <div class="flex items-start gap-2">
+                            <span class="text-gray-400 mt-1">🕐</span>
+                            <div class="text-xs text-gray-600">
+                                <p class="font-medium mb-1">Please remember:</p>
+                                <p>This AI assistant provides general guidance only. For medical emergencies or serious health concerns, always consult your pediatrician immediately.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
