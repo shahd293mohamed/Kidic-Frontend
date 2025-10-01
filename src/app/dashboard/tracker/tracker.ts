@@ -56,34 +56,14 @@ weightPercentile: number | null = null;
     this.loadGrowthRecords();
      
   }
-  //  loadGrowthRecords(): void {
-  //   this.growthService.getGrowthRecordsByChild(this.selectedChild).subscribe(records => {
-  //     this.growthRecords = records;
-  //     console.log('Growth Records:', records);
-  //   });
-  // }
 latestHeight: number | undefined;
 latestWeight: number | undefined;
 lastUpdatedHeight: string = '';
 lastUpdatedWeight: string = '';
 
-
-
-
-  // calculatePercentiles(age: number) {
-  //   const heightRef = referenceHeights[age];
-  //   const weightRef = referenceWeights[age];
-
-  //   this.heightPercentile = this.latestHeight ?? 0;
-  //   this.weightPercentile = this.latestWeight ?? 0;
-
-  //   console.log('Height Percentile:', this.heightPercentile);
-  //   console.log('Weight Percentile:', this.weightPercentile);
-  // }
-
   calculateHeightPercentile(age: number, height: number): number | null {
   const ref = referenceHeights[age];
-  if (!ref) return null; // No reference data for this age
+  if (!ref) return null; 
 
   if (height < ref.P3) return 3;
   if (height < ref.P50) return 50;
@@ -91,7 +71,7 @@ lastUpdatedWeight: string = '';
 }
 calculateWeightPercentile(age: number, weight: number): number | null {
   const ref = referenceWeights[age];
-  if (!ref) return null; // No reference data for this age
+  if (!ref) return null; 
 
   if (weight < ref.P3) return 3;
   if (weight < ref.P50) return 50;
@@ -118,8 +98,6 @@ loadGrowthRecords(): void {
     this.latestWeight = latestWeightRecord?.weight ?? undefined;
     this.lastUpdatedWeight = latestWeightRecord?.dateOfRecord || '';
 
-    // console.log('Latest Height:', this.latestHeight);
-    // console.log('Latest Weight:', this.latestWeight);
 
     console.log('Children Array:', this.children);
     console.log('Selected Child ID:', this.selectedChild);
@@ -145,63 +123,6 @@ loadGrowthRecords(): void {
 }
 
 
-
-
-// loadGrowthRecords(): void {
-//   this.growthService.getGrowthRecordsByChild(this.selectedChild).subscribe(records => {
-//     this.growthRecords = records;
-
-//     const sorted = [...records].sort((a, b) =>
-//       new Date(b.dateOfRecord).getTime() - new Date(a.dateOfRecord).getTime()
-//     );
-
-//     const latestHeightRecord = sorted.find(r => r.height != null);
-//     const latestWeightRecord = sorted.find(r => r.weight != null);
-
-//     this.latestHeight = latestHeightRecord?.height;
-//     this.lastUpdatedHeight = latestHeightRecord?.dateOfRecord || '';
-
-//     this.latestWeight = latestWeightRecord?.weight;
-//     this.lastUpdatedWeight = latestWeightRecord?.dateOfRecord || '';
-//   });
-// }
-
-// loadGrowthRecords(): void {
-//   this.growthService.getGrowthRecordsByChild(this.selectedChild).subscribe(records => {
-//     this.growthRecords = records;
-
-//     const sorted = [...records].sort((a, b) =>
-//       new Date(b.dateOfRecord).getTime() - new Date(a.dateOfRecord).getTime()
-//     );
-
-//     const latestHeightRecord = sorted.find(r => r.height != null);
-//     const latestWeightRecord = sorted.find(r => r.weight != null);
-
-//     this.latestHeight = latestHeightRecord?.height;
-//     this.lastUpdatedHeight = latestHeightRecord?.dateOfRecord || '';
-
-//     this.latestWeight = latestWeightRecord?.weight;
-//     this.lastUpdatedWeight = latestWeightRecord?.dateOfRecord || '';
-
-//     // ✅ Get the selected child's age
-//     const selectedChildObj = this.children.find(c => c.id === this.selectedChild);
-//     const age = selectedChildObj ? selectedChildObj.age : 0;
-
-//     // ✅ Calculate dynamic percentiles
-//     this.heightPercentile = this.latestHeight
-//       ? this.calculateHeightPercentile(age, this.latestHeight)
-//       : null;
-
-//     this.weightPercentile = this.latestWeight
-//       ? this.calculateWeightPercentile(age, this.latestWeight)
-//       : null;
-
-//     console.log('Height Percentile:', this.heightPercentile);
-//     console.log('Weight Percentile:', this.weightPercentile);
-//   });
-// }
-
-
     onAddMilestone(): void {
     const newRecord: GrowthRecord = {
       dateOfRecord: new Date().toISOString().split('T')[0],
@@ -225,29 +146,6 @@ this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
 });
 
   }
-
-  // loadFamilyData() {
-  //   this.isLoading = true;
-  //   this.errorMessage = '';
-
-  //   this.mainService.getFamily().subscribe({
-  //     next: (familyData) => {
-  //       console.log("Family Data:", familyData);
-
-  //       this.children = (familyData.children || []).map((child: any) => ({
-  //         ...child,
-  //         age: this.calculateAge(child.dateOfBirth)
-  //       }));
-
-  //       this.isLoading = false;
-  //     },
-  //     error: (err) => {
-  //       console.error("Error fetching family data:", err);
-  //       this.errorMessage = 'Failed to load family information.';
-  //       this.isLoading = false;
-  //     }
-  //   });
-  // }
   loadFamilyData() {
   this.isLoading = true;
   this.errorMessage = '';
@@ -274,17 +172,6 @@ this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
     }
   });
 }
-  //   calculateAge(dateOfBirth: string): number {
-  //   const birthDate = new Date(dateOfBirth);
-  //   const today = new Date();
-  //   let age = today.getFullYear() - birthDate.getFullYear();
-  //   const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  //   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-  //     age--;
-  //   }
-  //   return age;
-  // }
   calculateAge(dateOfBirth: string): number {
   const birthDate = new Date(dateOfBirth);
   const today = new Date();
@@ -293,7 +180,6 @@ this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
   const monthDiff = today.getMonth() - birthDate.getMonth();
   const dayDiff = today.getDate() - birthDate.getDate();
 
-  // Adjust if the birthday hasn't happened yet this year
   if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
     age--;
   }
@@ -377,7 +263,7 @@ submitMilestone(): void {
 }
 onChildChange(newChildId: number): void {
   this.selectedChild = newChildId;
-  this.loadGrowthRecords(); // Load new child's growth data
+  this.loadGrowthRecords(); 
 }
 
 }

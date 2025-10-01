@@ -12,45 +12,6 @@ import { MarkdownModule } from 'ngx-markdown';
   styleUrl: './chatbot.css'
 })
 export class Chatbot implements AfterViewChecked {
-// userMessage: string = '';
-// messages: Message[] = [];
-
-//   constructor(private chatbotService: ChatbotService) {}
-
-//   sendMessage() {
-//     if (!this.userMessage.trim()) return;
-
-//     // Add user message
-//     const userMsg: Message = {
-//       sender: 'user',
-//       text: this.userMessage,
-//       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-//     };
-//     this.messages.push(userMsg);
-
-//     // Call backend
-//     this.chatbotService.sendMessage(this.userMessage, 1).subscribe({
-//       next: (response) => {
-//         const botMsg: Message = {
-//           sender: 'bot',
-//           text: response.answer,
-//           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-//         };
-//         this.messages.push(botMsg);
-//       },
-//       error: (err) => {
-//         const botMsg: Message = {
-//           sender: 'bot',
-//           text: "⚠️ Sorry, something went wrong.",
-//           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-//         };
-//         this.messages.push(botMsg);
-//       }
-//     });
-
-//     this.userMessage = '';
-//   }
-
 userMessage: string = '';
   messages: Message[] = [];
 

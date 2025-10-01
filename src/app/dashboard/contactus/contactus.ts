@@ -22,34 +22,6 @@ export class Contactus {
   toggleFaq(index: number): void {
     this.activeIndex = this.activeIndex === index ? null : index;
   }
-
-  // submitForm() {
-  //   if (!this.subject || !this.message) {
-  //     return;
-  //   }
-
-  //   const payload: any = {
-  //     content: this.message,
-  //     type: this.subject.toUpperCase(), // "REVIEW" or "COMPLAINT"
-  //   };
-
-  //   // if it's a review, add stars
-  //   if (this.subject === 'review') {
-  //     payload.stars = this.stars;
-  //   }
-
-  //   this.contactusService.addReview(payload).subscribe({
-  //     next: () => {
-  //       this.successMessage = '✅ Thank you! Your message has been sent successfully.';
-  //       this.message = '';
-  //       this.subject = '';
-  //       this.stars = 0;
-  //     },
-  //     error: (err) => {
-  //       console.error('Error sending message', err);
-  //     }
-  //   });
-  // }
   submitForm() {
   if (!this.subject || !this.message) {
     return;
@@ -57,9 +29,9 @@ export class Contactus {
 
   let type: string;
   if (this.subject === 'review') {
-    type = 'NORMAL';   // ✅ backend expects NORMAL
+    type = 'NORMAL';   
   } else if (this.subject === 'complain') {
-    type = 'COMPLAIN'; // ✅ backend expects COMPLAIN
+    type = 'COMPLAIN'; 
   } else {
     return; 
   }

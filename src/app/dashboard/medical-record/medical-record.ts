@@ -19,7 +19,7 @@ export class MedicalRecord implements OnInit {
     status: 'ACTIVE',
     childId: 0
   };
-  selectedChildId = 4; // Example, dynamically change it
+  selectedChildId = 4; 
 
   constructor(private medicalRecordService: MedicalRecordService) {}
 

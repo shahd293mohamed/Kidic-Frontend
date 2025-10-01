@@ -10,17 +10,12 @@ export class NotificationApiService {
 
   constructor(private http: HttpClient) {}
 
-  // Get all notifications for a family
   getFamilyNotifications(familyId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/family/${familyId}`);
   }
-
-  // Mark notification as read
   markAsRead(notificationId: number): Observable<any> {
     return this.http.put(`${this.baseUrl}/${notificationId}/read`, {});
   }
-
-  // Mark all notifications as read
   markAllAsRead(familyId: string): Observable<any> {
     return this.http.put(`${this.baseUrl}/family/${familyId}/read-all`, {});
   }

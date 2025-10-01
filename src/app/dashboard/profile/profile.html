@@ -15,186 +15,180 @@
             </div>
 
  <!-- Tabs -->
-<div class="tabs">
-  <div class="tab-list">
-    <button 
-      class="tab-button" 
-      [class.active]="activeTab === 'parent'" 
-      (click)="showTab('parent')"
-    >
-      Parent Profile
-    </button>
+      <div class="tabs">
+        <div class="tab-list">
+          <button 
+            class="tab-button" 
+            [class.active]="activeTab === 'parent'" 
+            (click)="showTab('parent')"
+          >
+            Parent Profile
+          </button>
 
-    <button 
-      class="tab-button" 
-      [class.active]="activeTab === 'children'" 
-      (click)="showTab('children')"
-    >
-      Children Profiles
-    </button>
-  </div>
-</div>
-
-<!-- Parent Profile Tab -->
-<div *ngIf="activeTab === 'parent'" class="tab-content active space-y-6">
-  <div class="grid lg:grid-cols-3">
-    <!-- Profile Card -->
-    <div class="card">
-      <div class="card-header text-center" style="flex-direction: column;">
-        <div class="avatar mb-4">SJ</div>
-        <h2 class="card-title">{{parent.name}}</h2>
-        <p class="text-gray-600">Parent</p>
-        <span class="badge badge-secondary mt-2">Family Code: {{familyId}}</span>
-      </div>
-
-      <div class="card-content space-y-4">
-        <div class="info-item text-sm text-gray-600">
-          Joined January 2024
-        </div>
-        <div class="text-center">
-          <p class="stat-number">{{children.length}}</p>
-          <p class="stat-label">Children Profiles</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Details Card -->
-    <div class="card lg:col-span-2">
-      <div class="card-header" style="display: block;">
-        <div class="card-title">
-          <span style="display: flex; align-items: center;">
-            Personal Information
-          </span>
-          <button class="btn btn-outline btn-small" (click)="toggleParentEdit()">
-            {{ parentEditMode ? 'Cancel' : 'Edit' }}
+          <button 
+            class="tab-button" 
+            [class.active]="activeTab === 'children'" 
+            (click)="showTab('children')"
+          >
+            Children Profiles
           </button>
         </div>
       </div>
 
-      <div class="card-content space-y-6">
-        <!-- View Mode -->
-        <div *ngIf="!parentEditMode" class="info-list">
-          <div class="info-item">
-            <h4>Email:</h4>
-            <p class="text-gray-600">{{parent.email}}</p>
-          </div>
-          <div class="info-item">
-            <h4>Phone:</h4>
-            <p class="text-gray-600">{{parent.phone}}</p>
-          </div>
-          <div class="info-item">
-            <h4>Address:</h4>
-            <p class="text-gray-600">123 Main Street, City, State 12345</p>
+<!-- Parent Profile Tab -->
+        <div *ngIf="activeTab === 'parent'" class="tab-content active space-y-6">
+          <div class="grid lg:grid-cols-3">
+            <!-- Profile Card -->
+            <div class="card">
+              <div class="card-header text-center" style="flex-direction: column;">
+                <div class="avatar mb-4">SJ</div>
+                <h2 class="card-title">{{parent.name}}</h2>
+                <p class="text-gray-600">Parent</p>
+                <span class="badge badge-secondary mt-2">Family Code: {{familyId}}</span>
+              </div>
+
+              <div class="card-content space-y-4">
+                <div class="info-item text-sm text-gray-600">
+                  Joined January 2024
+                </div>
+                <div class="text-center">
+                  <p class="stat-number">{{children.length}}</p>
+                  <p class="stat-label">Children Profiles</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Details Card -->
+            <div class="card lg:col-span-2">
+              <div class="card-header" style="display: block;">
+                <div class="card-title">
+                  <span style="display: flex; align-items: center;">
+                    Personal Information
+                  </span>
+                  <button class="btn btn-outline btn-small" (click)="toggleParentEdit()">
+                    {{ parentEditMode ? 'Cancel' : 'Edit' }}
+                  </button>
+                </div>
+              </div>
+
+              <div class="card-content space-y-6">
+                <!-- View Mode -->
+                <div *ngIf="!parentEditMode" class="info-list">
+                  <div class="info-item">
+                    <h4>Email:</h4>
+                    <p class="text-gray-600">{{parent.email}}</p>
+                  </div>
+                  <div class="info-item">
+                    <h4>Phone:</h4>
+                    <p class="text-gray-600">{{parent.phone}}</p>
+                  </div>
+                  <div class="info-item">
+                    <h4>Address:</h4>
+                    <p class="text-gray-600">123 Main Street, City, State 12345</p>
+                  </div>
+                </div>
+
+                <!-- Edit Mode -->
+                <!-- <form *ngIf="parentEditMode" class="edit-form md:grid-cols-2">
+                  <div class="form-group">
+                    <label class="label">Full Name</label>
+                    <input class="input" value="{{parent.name}}" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label">Email</label>
+                    <input class="input" type="email" value="{{parent.email}}" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label">Phone Number</label>
+                    <input class="input" value="{{parent.phone}}" />
+                  </div>
+                  <div class="form-group" style="grid-column: 1 / -1;">
+                    <label class="label">Address</label>
+                    <textarea class="textarea">123 Main Street, City, State 12345</textarea>
+                  </div>
+                  <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Save Changes</button>
+                    <button class="btn btn-outline" type="button" (click)="toggleParentEdit()">Cancel</button>
+                  </div>
+                </form> -->
+                <form *ngIf="parentEditMode" class="edit-form md:grid-cols-2" (ngSubmit)="saveParent()">
+                <div class="form-group">
+                  <label class="label">Full Name</label>
+                  <input class="input" [(ngModel)]="parent.name" name="name" />
+                </div>
+                <div class="form-group">
+                  <label class="label">Email</label>
+                  <input class="input" type="email" [(ngModel)]="parent.email" name="email" />
+                </div>
+                <div class="form-group">
+                  <label class="label">Phone Number</label>
+                  <input class="input" [(ngModel)]="parent.phone" name="phone" />
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="label">Address</label>
+                  <textarea class="textarea" [(ngModel)]="parent.address" name="address"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-primary" type="submit">Save Changes</button>
+                  <button class="btn btn-outline" type="button" (click)="toggleParentEdit()">Cancel</button>
+                </div>
+              </form>
+
+                
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Edit Mode -->
-        <!-- <form *ngIf="parentEditMode" class="edit-form md:grid-cols-2">
-          <div class="form-group">
-            <label class="label">Full Name</label>
-            <input class="input" value="{{parent.name}}" />
+        <!-- Children Profiles Tab -->
+        <div *ngIf="activeTab === 'children'" class="tab-content active space-y-6">
+        <div *ngFor="let child of children; let i = index" class="card" >
+          <div class="card-header" style="display: block;">
+            <div class="card-title">
+              <span style="display: flex; align-items: center;">
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                  />
+                </svg>
+                {{ child.name }}
+              </span>
+              
+              <div>
+              <button
+                class="btn btn-outline btn-small " style="margin-right: 50;"
+                (click)="toggleChildEdit(i)"
+              >
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
+                </svg>
+                <span>{{ childEditMode[i] ? 'Cancel' : 'Edit' }}</span>
+              </button>
+              <button
+                class="btn btn-small bg-red-500 text-white hover:bg-red-300"
+                (click)="deleteChild(child.id)"
+              >
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
+                </svg>
+                <span> Delete</span>
+              </button>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="label">Email</label>
-            <input class="input" type="email" value="{{parent.email}}" />
-          </div>
-          <div class="form-group">
-            <label class="label">Phone Number</label>
-            <input class="input" value="{{parent.phone}}" />
-          </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label class="label">Address</label>
-            <textarea class="textarea">123 Main Street, City, State 12345</textarea>
-          </div>
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Save Changes</button>
-            <button class="btn btn-outline" type="button" (click)="toggleParentEdit()">Cancel</button>
-          </div>
-        </form> -->
-        <form *ngIf="parentEditMode" class="edit-form md:grid-cols-2" (ngSubmit)="saveParent()">
-        <div class="form-group">
-          <label class="label">Full Name</label>
-          <input class="input" [(ngModel)]="parent.name" name="name" />
-        </div>
-        <div class="form-group">
-          <label class="label">Email</label>
-          <input class="input" type="email" [(ngModel)]="parent.email" name="email" />
-        </div>
-        <div class="form-group">
-          <label class="label">Phone Number</label>
-          <input class="input" [(ngModel)]="parent.phone" name="phone" />
-        </div>
-        <div class="form-group" style="grid-column: 1 / -1;">
-          <label class="label">Address</label>
-          <textarea class="textarea" [(ngModel)]="parent.address" name="address"></textarea>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-primary" type="submit">Save Changes</button>
-          <button class="btn btn-outline" type="button" (click)="toggleParentEdit()">Cancel</button>
-        </div>
-      </form>
-
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Children Profiles Tab -->
- <div *ngIf="activeTab === 'children'" class="tab-content active space-y-6">
-<div *ngFor="let child of children; let i = index" class="card" >
-  <div class="card-header" style="display: block;">
-    <div class="card-title">
-      <span style="display: flex; align-items: center;">
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-          />
-        </svg>
-        {{ child.name }}
-      </span>
-      
-      <div>
-      <button
-        class="btn btn-outline btn-small " style="margin-right: 50;"
-        (click)="toggleChildEdit(i)"
-      >
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-          />
-        </svg>
-        <span>{{ childEditMode[i] ? 'Cancel' : 'Edit' }}</span>
-      </button>
-      <button
-        class="btn btn-small bg-red-500 text-white hover:bg-red-300"
-        (click)="deleteChild(child.id)"
-      >
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-          />
-        </svg>
-        <span> Delete</span>
-      </button>
-      </div>
-           <!-- <button
-          class="btn btn-danger btn-small"
-          (click)="deleteChild(child.id)"
-        >
-          Delete
-        </button> -->
-    </div>
-  </div>
 
   <div class="card-content">
     <!-- View Mode -->

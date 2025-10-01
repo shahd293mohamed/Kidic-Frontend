@@ -39,7 +39,5 @@ export class Signin implements OnInit{
   console.log(Value);
   
   }
-
-
 }
 

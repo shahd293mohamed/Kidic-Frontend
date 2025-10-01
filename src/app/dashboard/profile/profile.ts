@@ -33,27 +33,18 @@ export class Profile implements OnInit {
       console.error('No family_id found in token!');
       return;
     }
-    
-    
   }
- 
-
   activeTab: 'parent' | 'children' = 'parent';
 
   parentEditMode = false;
   childEditMode: { [key: number]: boolean } = {};
-
-  // Switch between Parent & Children tabs
   showTab(tab: 'parent' | 'children') {
     this.activeTab = tab;
   }
 
-  // Toggle parent edit mode
   toggleParentEdit() {
     this.parentEditMode = !this.parentEditMode;
   }
-
-  // Toggle child edit mode
  toggleChildEdit(childId: number) {
   this.childEditMode[childId] = !this.childEditMode[childId];
 }
@@ -87,8 +78,6 @@ saveChild(child: any) {
   });
 }
 
-
-  // Helper to get initials
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -97,7 +86,6 @@ saveChild(child: any) {
       .toUpperCase();
   }
 
-  // Helper to calculate age
   getAge(dateOfBirth: string): string {
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
@@ -112,19 +100,6 @@ saveChild(child: any) {
     return `${months} month${months > 1 ? 's' : ''}`;
   }
 
-// deleteChild(id: number) {
-//   if (confirm('Are you sure you want to delete this child?')) {
-//     this.mainService.deleteChild(id).subscribe({
-//       next: (res) => {
-//         console.log('Child deleted:', res);
-//         this.children = this.children.filter(c => c.id !== id);
-//       },
-//       error: (err) => {
-//         console.error('Error deleting child:', err);
-//       }
-//     });
-//   }
-// }
 deleteChild(id: number) {
   if (confirm('Are you sure you want to delete this child?')) {
     this.mainService.deleteChild(id).subscribe({
@@ -138,8 +113,4 @@ deleteChild(id: number) {
     });
   }
 }
-
-
-  
-
 }

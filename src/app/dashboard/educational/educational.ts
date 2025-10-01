@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './educational.css'
 })
 export class Educational {
-  activeTab: string = 'activities'; // default active tab
+  activeTab: string = 'activities'; 
 
   showTab(tabName: string) {
     this.activeTab = tabName;

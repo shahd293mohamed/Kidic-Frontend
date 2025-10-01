@@ -15,63 +15,43 @@
                         <i data-lucide="check-circle"></i>
                         <span>Thank you! Your message has been sent successfully.</span>
                     </div>
-                    <!-- <form id="contactForm">
+                    <form (ngSubmit)="submitForm()" #contactForm="ngForm">
                         <div class="form-group">
                             <label class="form-label" for="subject">Subject *</label>
-                            <select id="subject" name="subject" class="form-select" required>
-                                <option value="">Please select a topic</option>
-                                <option value="review">Review</option>
-                                <option value="complaint">Complaint</option>
-                            
+                            <select id="subject" name="subject" [(ngModel)]="subject" class="form-select" required>
+                            <option value="">Please select a topic</option>
+                            <option value="review">Review</option>
+                            <option value="complain">Complain</option>
                             </select>
+                        </div>
+
+                        <!-- Show stars only if subject is review -->
+                        <div class="form-group" *ngIf="subject === 'review'">
+                            <label class="form-label">Rating *</label>
+                            <div class="stars">
+                            <i
+                                *ngFor="let star of [1,2,3,4,5]"
+                                class="fa-star"
+                                [ngClass]="stars >= star ? 'fa-solid' : 'fa-regular'"
+                                (click)="stars = star"
+                                style="cursor: pointer; font-size: 20px; margin-right: 5px;"
+                            ></i>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" for="message">Message *</label>
-                            <textarea id="message" name="message" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+                            <textarea id="message" name="message" [(ngModel)]="message" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
                         </div>
 
-                        <button type="submit" class="btn">
-                            Send Message
-                        </button>
-                    </form> -->
-                    <form (ngSubmit)="submitForm()" #contactForm="ngForm">
-  <div class="form-group">
-    <label class="form-label" for="subject">Subject *</label>
-    <select id="subject" name="subject" [(ngModel)]="subject" class="form-select" required>
-      <option value="">Please select a topic</option>
-      <option value="review">Review</option>
-      <option value="complain">Complain</option>
-    </select>
-  </div>
+                        <button type="submit" class="btn">Send Message</button>
 
-  <!-- Show stars only if subject is review -->
-  <div class="form-group" *ngIf="subject === 'review'">
-    <label class="form-label">Rating *</label>
-    <div class="stars">
-      <i
-        *ngFor="let star of [1,2,3,4,5]"
-        class="fa-star"
-        [ngClass]="stars >= star ? 'fa-solid' : 'fa-regular'"
-        (click)="stars = star"
-        style="cursor: pointer; font-size: 20px; margin-right: 5px;"
-      ></i>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="form-label" for="message">Message *</label>
-    <textarea id="message" name="message" [(ngModel)]="message" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
-  </div>
-
-  <button type="submit" class="btn">Send Message</button>
-
-  <div *ngIf="successMessage" class="success-message">
-    <i class="fa-solid fa-check-circle"></i>
-    <span>{{ successMessage }}</span>
-  </div>
-</form>
-                </div>
+                        <div *ngIf="successMessage" class="success-message">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>{{ successMessage }}</span>
+                        </div>
+                        </form>
+                     </div>
 
                 <!-- Contact Information -->
                 <div class="card">

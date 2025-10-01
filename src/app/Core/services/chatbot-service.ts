@@ -13,7 +13,7 @@ export class ChatbotService {
   sendMessage(message: string, userId: number=4): Observable<any> {
      return this._http.post<any>(this.baseUrl, {
       message,
-      user_id: userId   // your backend expects this
+      user_id: userId   
     });
   }
 

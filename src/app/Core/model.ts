@@ -12,46 +12,21 @@ export interface Ilogin{
 export interface IloginRes{
     token:string
 }
-// export interface DecodedToken {
-//   sub: string;        // The parent's email
-//   iat: number;        // Token creation timestamp
-//   exp: number;        // Token expiration timestamp
-//   familyId?: string; // Optional - only present if parent joined a family
-// }
 export interface DecodedToken {
   family_id: string;
   sub: string;
   iat: number;
   exp: number;
 }
-// export interface GrowthRecord {
-//   id?: number;
-//   additionalInfo?: string;
-//   dateOfRecord: string; // "YYYY-MM-DD"
-//   height?: number;
-//   weight?: number;
-//   type: 'EMOTIONAL' | 'PHYSICAL' | 'COGNITION';
-//   status: 'ACHIEVED' | 'NOT_ACHIEVED';
-//   childId: number;
-// }
-
-// export interface Milestone {
-//   id?: number;
-//   title: string;
-//   category: string;
-//   date: string;
-//   status: 'COMPLETED' | 'UPCOMING';
-// }
-
 
 export interface ImedicalRecord {
   id?: number;
   type: 'VACCINATION' | 'CHECKUP' | 'ILLNESS' | 'INJURY' | 'ALLERGY' | 'MEDICATION' | 'OTHER';
-  dateOfRecord: string; // ISO date
+  dateOfRecord: string; 
   description: string;
   fileType?: 'PDF' | 'IMAGE' | 'DOCUMENT' | 'VIDEO' | 'AUDIO' | 'OTHER';
   fileName?: string;
-  fileContent?: ArrayBuffer; // or string if it's base64
+  fileContent?: ArrayBuffer; 
   fileSize?: number;
   fileContentType?: string;
   status: 'ACTIVE' | 'ARCHIVED' | 'PENDING' | 'COMPLETED' | 'CANCELLED';
@@ -60,7 +35,7 @@ export interface ImedicalRecord {
 export interface GrowthRecord {
   id?: number;
   additionalInfo?: string;
-  dateOfRecord: string; // ISO format
+  dateOfRecord: string; 
   height?: number;
   weight?: number;
   type: 'EMOTIONAL' | 'PHYSICAL' | 'COGNITION';

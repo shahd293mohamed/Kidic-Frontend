@@ -20,15 +20,11 @@ export class NotificationService {
   private baseUrl = 'http://localhost:8080/api/notifications';
   private stompClient: Client | null = null;
 
-  // ✅ Store notifications so UI updates in real-time
   private notificationsSubject = new BehaviorSubject<Notification[]>([]);
   notifications$ = this.notificationsSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  // ------------------------
-  // REST APIs
-  // ------------------------
 
   getUserNotifications(parentId: number): Observable<Notification[]> {
     return this.http.get<Notification[]>(`${this.baseUrl}/${parentId}`);
@@ -61,13 +57,8 @@ export class NotificationService {
   }
 
   clearAllNotifications(parentId: number): Observable<void> {
-    // If backend supports deleting all notifications
-    return of(); // placeholder
+    return of(); 
   }
-
-  // ------------------------
-  // WebSocket Setup
-  // ------------------------
 
   connect(parentId: number): void {
     if (this.stompClient && this.stompClient.active) {
@@ -78,18 +69,16 @@ export class NotificationService {
     const socket = new SockJS('http://localhost:8080/ws');
 
     this.stompClient = Stomp.over(socket);
-    this.stompClient.debug = () => {}; // disable debug logs for cleaner console
+    this.stompClient.debug = () => {}; 
 
     this.stompClient.onConnect = () => {
       console.log('✅ Connected to WebSocket');
 
-      // Subscribe to the specific user's queue
       this.stompClient?.subscribe(`/user/${parentId}/queue/notifications`, (message: IMessage) => {
         if (message.body) {
           const newNotification: Notification = JSON.parse(message.body);
           console.log('🔔 New notification:', newNotification);
 
-          // Update local state
           const current = this.notificationsSubject.value;
           this.notificationsSubject.next([newNotification, ...current]);
         }

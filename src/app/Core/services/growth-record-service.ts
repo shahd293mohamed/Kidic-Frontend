@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GrowthRecordService {
-  private apiUrl = 'http://localhost:8080/api/growth-records'; // adjust as needed
+  private apiUrl = 'http://localhost:8080/api/growth-records';
 
   constructor(private http: HttpClient) {}
 
@@ -15,9 +15,6 @@ export class GrowthRecordService {
     return this.http.get<GrowthRecord[]>(`${this.apiUrl}/children/${childId}`);
   }
 
-  // addGrowthRecord(childId: number,record: GrowthRecord): Observable<GrowthRecord> {
-  //   return this.http.post<GrowthRecord>(`${this.apiUrl}/children/${childId}`, record);
-  // }
   addGrowthRecord(childId: number, record: any): Observable<any> {
    const formData = new FormData();
   formData.append('dateOfRecord', record.dateOfRecord);
