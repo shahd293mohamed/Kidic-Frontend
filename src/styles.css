@@ -219,8 +219,8 @@ body {
 
 .card-header {
   display: flex;
-  flex-direction: column;
-  space-y: 1.5;
+  flex-direction: row;
+  gap: 0.5rem;
   padding: 1.5rem;
 }
 
@@ -392,9 +392,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.5rem;
+  /* height: 2.5rem; */
   background-color: hsl(var(--muted));
-  color: hsl(var(--muted-foreground));
+  /* color: hsl(var(--muted-foreground)); */
   border-radius: calc(var(--radius) - 2px);
   padding: 0.25rem;
 }

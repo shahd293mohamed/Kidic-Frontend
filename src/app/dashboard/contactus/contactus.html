@@ -1,0 +1,192 @@
+<section class="hero">
+        <div class="container">
+            <h1>Get in Touch</h1>
+            <p>Have questions or feedback? We're here to help you on your parenting journey. Reach out anytime!</p>
+        </div>
+    </section>
+
+    <main class="main">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="card">
+                    <h2>Send us a Message</h2>
+                    <div class="success-message" id="successMessage">
+                        <i data-lucide="check-circle"></i>
+                        <span>Thank you! Your message has been sent successfully.</span>
+                    </div>
+                    <!-- <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="subject">Subject *</label>
+                            <select id="subject" name="subject" class="form-select" required>
+                                <option value="">Please select a topic</option>
+                                <option value="review">Review</option>
+                                <option value="complaint">Complaint</option>
+                            
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">Message *</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn">
+                            Send Message
+                        </button>
+                    </form> -->
+                    <form (ngSubmit)="submitForm()" #contactForm="ngForm">
+  <div class="form-group">
+    <label class="form-label" for="subject">Subject *</label>
+    <select id="subject" name="subject" [(ngModel)]="subject" class="form-select" required>
+      <option value="">Please select a topic</option>
+      <option value="review">Review</option>
+      <option value="complain">Complain</option>
+    </select>
+  </div>
+
+  <!-- Show stars only if subject is review -->
+  <div class="form-group" *ngIf="subject === 'review'">
+    <label class="form-label">Rating *</label>
+    <div class="stars">
+      <i
+        *ngFor="let star of [1,2,3,4,5]"
+        class="fa-star"
+        [ngClass]="stars >= star ? 'fa-solid' : 'fa-regular'"
+        (click)="stars = star"
+        style="cursor: pointer; font-size: 20px; margin-right: 5px;"
+      ></i>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="message">Message *</label>
+    <textarea id="message" name="message" [(ngModel)]="message" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+  </div>
+
+  <button type="submit" class="btn">Send Message</button>
+
+  <div *ngIf="successMessage" class="success-message">
+    <i class="fa-solid fa-check-circle"></i>
+    <span>{{ successMessage }}</span>
+  </div>
+</form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="card">
+                    <h2>Contact Information</h2>
+                    <div class="contact-info">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fa-solid fa-envelope" style="font-size: 25px; text-align: center;"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Email Us</h3>
+                                <p><a href="mailto:support@parenttracker.com">support@KIDIC.com</a></p>
+                                <p>We typically respond within 24 hours</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fa-brands fa-instagram" style="font-size: 25px; text-align: center;"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Instagram</h3>
+                                <p><a href="https://instagram.com/parenttracker" target="_blank">@parenttracker</a></p>
+                                <p>Follow us for tips and updates</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fa-brands fa-facebook-f" style="font-size: 25px; text-align: center;"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Facebook</h3>
+                                <p><a href="https://facebook.com/parenttracker" target="_blank">ParentTracker Community</a></p>
+                                <p>Join our parenting community</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fa-brands fa-twitter" style="font-size: 25px; text-align: center;"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Twitter</h3>
+                                <p><a href="https://twitter.com/parenttracker" target="_blank">@parenttracker</a></p>
+                                <p>Stay updated with our latest news</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item" [class.active]="activeIndex === 0">
+                    <button class="faq-question" (click)="toggleFaq(0)">
+                        <span>How do I track my child's milestones?</span>
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Simply navigate to the Tracker section in your dashboard. You can log milestones, upload photos, and track developmental progress over time. Our AI assistant can also help identify important milestones to watch for based on your child's age.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" [class.active]="activeIndex === 1">
+                    <button class="faq-question" (click)="toggleFaq(1)">
+                        <span>Is my family's data secure?</span>
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We use bank-level encryption (256-bit SSL) to protect your data and follow strict privacy guidelines including GDPR and COPPA compliance. Your family's information is never shared with third parties without your explicit consent, and you have full control over your data at all times.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" [class.active]="activeIndex === 2">
+                    <button class="faq-question" (click)="toggleFaq(2)">
+                        <span>Can I add multiple children to one account?</span>
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! You can add unlimited children to your account at no extra cost. Each child gets their own profile with personalized tracking, milestones, growth charts, vaccination schedules, and age-appropriate recommendations tailored to their development stage.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" [class.active]="activeIndex === 3">
+                    <button class="faq-question" (click)="toggleFaq(3)">
+                        <span>How does the AI assistant work?</span>
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our AI assistant provides personalized advice based on your child's age, development stage, and your specific questions. It's trained on current pediatric guidelines, developmental psychology research, and parenting best practices to give you reliable, evidence-based information. The assistant is available 24/7 to answer questions about sleep, feeding, behavior, milestones, and more.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" [class.active]="activeIndex === 4">
+                    <button class="faq-question" (click)="toggleFaq(4)">
+                        <span>What age range does ParentTracker support?</span>
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>ParentTracker is designed to support parents from pregnancy through age 12. We provide age-appropriate tracking, milestones, and guidance for each developmental stage, from newborn care to preteen challenges. You can track multiple children of different ages simultaneously.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" [class.active]="activeIndex === 5">
+                    <button class="faq-question" (click)="toggleFaq(5)">
+                        <span>Is there a mobile app available?</span>
+                        <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! ParentTracker is available on both iOS and Android devices. The mobile app syncs seamlessly with the web version, so you can access your child's information anywhere. Download it from the App Store or Google Play Store, and sign in with your existing account.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>

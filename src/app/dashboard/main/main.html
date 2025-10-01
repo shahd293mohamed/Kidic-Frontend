@@ -1,0 +1,513 @@
+<!-- <main class="main">
+  <div class="container">
+
+   
+    <div *ngIf="isLoading" class="loader">
+      <p>Loading dashboard...</p>
+    </div>
+
+   
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    
+    <div *ngIf="!isLoading && !errorMessage">
+      
+      <div class="welcome">
+        <h1>Welcome back, {{ parent?.name || 'Parent' }}! 👋</h1>
+        <p>Here's what's happening with your little ones today.</p>
+      </div>
+
+     
+      <div class="quick-actions">
+        <a routerLink="/dashboard/tracker" class="quick-action-card">
+          <i class="fa-solid fa-arrow-trend-up icon"></i>
+          <p>Tracker</p>
+        </a>
+        <a routerLink="/dashboard/educational-content" class="quick-action-card">
+          <i class="fa-solid fa-book-open icon"></i>
+          <p>Education</p>
+        </a>
+        <a routerLink="/dashboard/chatbot" class="quick-action-card">
+          <i class="fa-regular fa-comment icon"></i>
+          <p>AI Assistant</p>
+        </a>
+        <a routerLink="/dashboard/store" class="quick-action-card">
+          <i class="fa-solid fa-cart-shopping icon"></i>
+          <p>Smart Store</p>
+        </a>
+      </div>
+
+      <div class="main-grid">
+       
+        <div class="content-left">
+          
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <i data-lucide="baby" class="icon"></i>
+                Your Children
+              </h2>
+            </div>
+            <div class="card-content">
+              <div class="children-list">
+
+               
+                <div *ngFor="let child of children" class="child-item">
+                  <div class="child-info">
+                    <div class="avatar">{{ child.name[0] }}</div>
+                    <div class="child-details">
+                      <h3>{{ child.name }}</h3>
+                      <p>{{ child.age }} years old</p>
+                    </div>
+                  </div>
+                  <button class="btn" (click)="viewChildProfile(child.id)">
+                    View Profile
+                  </button>
+                </div>
+
+               
+                <button class="btn btn-full" (click)="addChild()">
+                  + Add Another Child
+                </button>
+              </div>
+            </div>
+          </div>
+
+        
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Recent Milestones</h2>
+            </div>
+            <div class="card-content">
+              <div class="milestones-list">
+                <div class="milestone-item">
+                  <div class="milestone-info">
+                    <h4>Emma: First complete sentence</h4>
+                    <p>3 days ago</p>
+                  </div>
+                  <span class="badge badge-new">New</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="sidebar">
+         
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <i data-lucide="bell" class="icon"></i>
+                Upcoming Reminders
+              </h2>
+            </div>
+            <div class="card-content">
+              <p>No upcoming reminders yet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main> -->
+<main class="main">
+  <div class="container">
+
+    <!-- Loader -->
+    <div *ngIf="isLoading" class="loader">
+      <p>Loading dashboard...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Main Dashboard Content -->
+    <div *ngIf="!isLoading && !errorMessage">
+      
+      <!-- Welcome Section -->
+      <div class="welcome">
+        <h1>Welcome back, {{ parent?.name || 'Parent' }}! 👋</h1>
+        <p>Here's what's happening with your little ones today.</p>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <a routerLink="/dashboard/tracker" class="quick-action-card">
+          <i class="fa-solid fa-arrow-trend-up icon"></i>
+          <p>Tracker</p>
+        </a>
+        <a routerLink="/dashboard/educational-content" class="quick-action-card">
+          <i class="fa-solid fa-book-open icon"></i>
+          <p>Education</p>
+        </a>
+        <a routerLink="/dashboard/chatbot" class="quick-action-card">
+          <i class="fa-regular fa-comment icon"></i>
+          <p>AI Assistant</p>
+        </a>
+        <a routerLink="/dashboard/store" class="quick-action-card">
+          <i class="fa-solid fa-cart-shopping icon"></i>
+          <p>Smart Store</p>
+        </a>
+      </div>
+
+      <div class="main-grid">
+        <!-- Main Content -->
+        <div class="content-left">
+
+          <!-- Children Overview -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <i data-lucide="baby" class="icon"></i>
+                Your Children
+              </h2>
+            </div>
+            <div class="card-content">
+              <div class="children-list">
+
+                <!-- Loop through children dynamically -->
+                <div *ngFor="let child of children" class="child-item">
+                  <div class="child-info">
+                    <div class="avatar">{{ child.name[0] }}</div>
+                    <div class="child-details">
+                      <h3>{{ child.name }}</h3>
+                      <p>{{ calculateAge(child.dateOfBirth) }} years old</p>
+                      <small *ngIf="child.medicalNotes">Notes: {{ child.medicalNotes }}</small>
+                    </div>
+                  </div>
+                  <button class="btn" (click)="viewChildProfile(child.id)">
+                    View Profile
+                  </button>
+                </div>
+
+                <!-- Add New Child Button -->
+                <!-- <button class="btn btn-full" (click)="addChild()">
+                  + Add Another Child
+                </button> -->
+                <button class="btn btn-full" (click)="openAddChildForm()">
+  + Add Another Child
+</button>
+
+<!-- ========================= -->
+<!-- Add Child Modal Overlay -->
+<!-- ========================= -->
+<!-- <div class="modal-overlay" *ngIf="showAddChildForm">
+
+  <div class="modal-card">
+    <h2>Add New Child</h2>
+
+    <form (ngSubmit)="saveChild()" class="form">
+     
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="newChild.name" name="name" placeholder="Enter child's name" required />
+      </div>
+
+      
+      <div class="form-group">
+        <label>Gender</label>
+        <select [(ngModel)]="newChild.gender" name="gender" required>
+          <option [value]="true">Male</option>
+          <option [value]="false">Female</option>
+        </select>
+      </div>
+
+      
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" [(ngModel)]="newChild.dateOfBirth" name="dateOfBirth" required />
+      </div>
+
+      
+      <div class="form-group">
+        <label>Medical Notes</label>
+        <textarea [(ngModel)]="newChild.medicalNotes" name="medicalNotes" placeholder="Any medical conditions..."></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="closeAddChildForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div> -->
+         <!-- <div class="modal-overlay" *ngIf="showAddChildForm">
+  <div class="modal-card">
+    <h2>Add New Child</h2> -->
+<div class="modal-overlay" *ngIf="showAddChildForm">
+  <div class="modal-card">
+    
+    <!-- Scrollable content -->
+    <div class="scrollable-content">
+      <form (ngSubmit)="saveChild()" class="form">
+
+        <!-- ================== -->
+        <!-- Child Basic Info -->
+        <!-- ================== -->
+        <div class="form-group">
+          <label for="childName">Name</label>
+          <input
+            id="childName"
+            type="text"
+            [(ngModel)]="newChild.name"
+            name="name"
+            placeholder="Enter child's name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" [(ngModel)]="newChild.gender" name="gender" required>
+            <option [value]="true">Male</option>
+            <option [value]="false">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input
+            id="dob"
+            type="date"
+            [(ngModel)]="newChild.dateOfBirth"
+            name="dateOfBirth"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Medical Notes</label>
+          <textarea
+            id="notes"
+            [(ngModel)]="newChild.medicalNotes"
+            name="medicalNotes"
+            placeholder="Any medical conditions..."
+          ></textarea>
+        </div>
+
+        <hr />
+
+        <!-- ============================= -->
+        <!-- Medical Records Section -->
+        <!-- ============================= -->
+        <h3>Medical Records</h3>
+        <div *ngFor="let record of medicalRecords; let i = index" class="record-item">
+          <div class="form-group">
+            <label>Type</label>
+            <select [(ngModel)]="record.type" name="medicalType{{i}}" required>
+              <option value="VACCINATION">Vaccination</option>
+              <option value="CHECKUP">Checkup</option>
+              <option value="ILLNESS">Illness</option>
+              <option value="INJURY">Injury</option>
+              <option value="ALLERGY">Allergy</option>
+              <option value="MEDICATION">Medication</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Date</label>
+            <input
+              type="date"
+              [(ngModel)]="record.dateOfRecord"
+              name="medicalDate{{i}}"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea
+              [(ngModel)]="record.description"
+              name="medicalDesc{{i}}"
+              placeholder="Details about this medical record"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="record.status" name="medicalStatus{{i}}" required>
+              <option value="ACTIVE">Active</option>
+              <option value="ARCHIVED">Archived</option>
+              <option value="PENDING">Pending</option>
+              <option value="COMPLETED">Completed</option>
+              <option value="CANCELLED">Cancelled</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeMedicalRecord(i)">
+            Remove
+          </button>
+          <hr />
+        </div>
+
+        <button type="button" class="btn btn-secondary" (click)="addMedicalRecord()">
+          + Add Medical Record
+        </button>
+
+        <hr />
+
+        <!-- ============================= -->
+        <!-- Growth Records Section -->
+        <!-- ============================= -->
+        <h3>Growth Records</h3>
+        <div *ngFor="let growth of growthRecords; let j = index" class="record-item">
+          <div class="form-group">
+            <label>Date</label>
+            <input
+              type="date"
+              [(ngModel)]="growth.dateOfRecord"
+              name="growthDate{{j}}"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Type</label>
+            <select [(ngModel)]="growth.type" name="growthType{{j}}" required>
+              <option value="EMOTIONAL">Emotional</option>
+              <option value="PHYSICAL">Physical</option>
+              <option value="COGNITION">Cognition</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="growth.status" name="growthStatus{{j}}" required>
+              <option value="ACHIEVED">Achieved</option>
+              <option value="NOT_ACHIEVED">Not Achieved</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Height (cm)</label>
+            <input
+              type="number"
+              [(ngModel)]="growth.height"
+              name="growthHeight{{j}}"
+              placeholder="Optional"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input
+              type="number"
+              [(ngModel)]="growth.weight"
+              name="growthWeight{{j}}"
+              placeholder="Optional"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Additional Info</label>
+            <textarea
+              [(ngModel)]="growth.additionalInfo"
+              name="growthInfo{{j}}"
+              placeholder="Any extra notes..."
+            ></textarea>
+          </div>
+
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeGrowthRecord(j)">
+            Remove
+          </button>
+          <hr />
+        </div>
+
+        <button type="button" class="btn btn-secondary" (click)="addGrowthRecord()">
+          + Add Growth Record
+        </button>
+
+        <hr />
+
+        <!-- ============================= -->
+        <!-- Action Buttons -->
+        <!-- ============================= -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            Save Child
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="closeAddChildForm()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+     
+</div>
+            </div>
+          </div>
+
+          <!-- Recent Milestones -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Recent Milestones</h2>
+            </div>
+            <div class="card-content">
+              <div class="milestones-list">
+                <div class="milestone-item">
+                  <div class="milestone-info">
+                    <h4>{{ children[0]?.name || 'Your child' }}: First complete sentence</h4>
+                    <p>3 days ago</p>
+                  </div>
+                  <span class="badge badge-new">New</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+          <!-- Upcoming Reminders -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">
+                <i data-lucide="bell" class="icon"></i>
+                Upcoming Reminders
+              </h2>
+            </div>
+            <div class="card-content">
+              <p>No upcoming reminders yet.</p>
+            </div>
+          </div>
+
+                 <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Quick Access</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="quick-access-list">
+                                <a href="/emergency" class="quick-access-btn">
+                                    <i data-lucide="alert-triangle" class="icon"></i>
+                                    Emergency Protocols
+                                </a>
+                                <a href="/doctors" class="quick-access-btn">
+                                    <i data-lucide="stethoscope" class="icon"></i>
+                                    Find Doctors
+                                </a>
+                                <a href="/tracker/vaccines" class="quick-access-btn">
+                                    <i data-lucide="calendar" class="icon"></i>
+                                    Vaccine Schedule
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+

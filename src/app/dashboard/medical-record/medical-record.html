@@ -1,0 +1,58 @@
+<div class="container">
+  <h2 class="text-2xl font-bold mb-4">Medical Records</h2>
+
+  <!-- Add Record Form -->
+  <form (ngSubmit)="addRecord()" class="space-y-4">
+    <div>
+      <label>Type:</label>
+      <select [(ngModel)]="newRecord.type" name="type" class="border p-2 w-full">
+        <option value="VACCINATION">Vaccination</option>
+        <option value="CHECKUP">Checkup</option>
+        <option value="ILLNESS">Illness</option>
+        <option value="INJURY">Injury</option>
+        <option value="ALLERGY">Allergy</option>
+        <option value="MEDICATION">Medication</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Date of Record:</label>
+      <input type="date" [(ngModel)]="newRecord.dateOfRecord" name="dateOfRecord" class="border p-2 w-full">
+    </div>
+
+    <div>
+      <label>Description:</label>
+      <textarea [(ngModel)]="newRecord.description" name="description" class="border p-2 w-full"></textarea>
+    </div>
+
+    <div>
+      <label>Status:</label>
+      <select [(ngModel)]="newRecord.status" name="status" class="border p-2 w-full">
+        <option value="ACTIVE">Active</option>
+        <option value="ARCHIVED">Archived</option>
+        <option value="PENDING">Pending</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+    </div>
+
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Record</button>
+  </form>
+
+  <!-- Records List -->
+  <div class="mt-8">
+    <h3 class="text-xl font-bold mb-2">Existing Records</h3>
+    <ul>
+      <li *ngFor="let record of medicalRecords" class="flex justify-between items-center border-b py-2">
+        <div>
+          <strong>{{ record.type }}</strong> - {{ record.description }} <br>
+          <small>{{ record.dateOfRecord }} | Status: {{ record.status }}</small>
+        </div>
+        <button (click)="deleteRecord(record.id!)" class="bg-red-500 text-white px-3 py-1 rounded">
+          Delete
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -225,6 +225,8 @@
             width: 1.5rem;
             height: 1.5rem;
             color: #667eea;
+            font-size: 25px;
+            text-align:center;
         }
         
         .stat-number {

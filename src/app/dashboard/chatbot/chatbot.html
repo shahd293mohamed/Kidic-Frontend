@@ -18,59 +18,56 @@
                         </div>
                     </div>
                     
-                    <!-- Messages -->
-                    <div class="flex-1 overflow-y-auto p-4 space-y-4">
-                        <!-- Bot Message -->
-                        <div class="flex justify-start">
-                            <div class="flex items-start space-x-2 max-w-[80%]">
-                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-sm">🤖</span>
-                                </div>
-                                <div class="bg-gray-100 rounded-lg p-3">
-                                    <p class="text-sm whitespace-pre-wrap">Hello! I'm your KidCare AI assistant. I'm here to help with any parenting questions you have. Feel free to ask about sleep, feeding, development, behavior, or any other concerns!</p>
-                                    <p class="text-xs text-gray-500 mt-1">10:30 AM</p>
-                                </div>
-                            </div>
-                        </div>
+<!-- Messages -->
+<div #messagesContainer class="flex-1 overflow-y-auto p-4 space-y-4">
+  <div *ngFor="let msg of messages">
+    <!-- Bot message -->
+    <!-- <div *ngIf="msg.sender === 'bot'" class="flex justify-start">
+      <div class="flex items-start space-x-2 max-w-[80%]">
+        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+          🤖
+        </div>
+        <div class="bg-gray-100 rounded-lg p-3">
+          <p class="text-sm whitespace-pre-wrap">{{ msg.text }}</p>
+          <p class="text-xs text-gray-500 mt-1">{{ msg.time }}</p>
+        </div>
+      </div>
+    </div> -->
+    <!-- Bot message -->
+<div *ngIf="msg.sender === 'bot'" class="flex justify-start">
+  <div class="flex items-start space-x-2 max-w-[80%]">
+    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+      🤖
+    </div>
+    <div class="bg-gray-100 rounded-lg p-3">
+      <markdown [data]="msg.text"></markdown>
+      <p class="text-xs text-gray-500 mt-1">{{ msg.time }}</p>
+    </div>
+  </div>
+</div>
 
-                        <!-- User Message -->
-                        <div class="flex justify-end">
-                            <div class="flex items-start space-x-2 max-w-[80%] flex-row-reverse space-x-reverse">
-                                <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-sm">👤</span>
-                                </div>
-                                <div class="bg-blue-600 text-white rounded-lg p-3">
-                                    <p class="text-sm">My 18-month-old has been having trouble sleeping through the night. Any suggestions?</p>
-                                    <p class="text-xs text-blue-100 mt-1">10:32 AM</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Bot Response -->
-                        <div class="flex justify-start">
-                            <div class="flex items-start space-x-2 max-w-[80%]">
-                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-sm">🤖</span>
-                                </div>
-                                <div class="bg-gray-100 rounded-lg p-3">
-                                    <p class="text-sm whitespace-pre-wrap">Sleep challenges at 18 months are very common! Here are some gentle strategies that often help:
+    <!-- User message -->
+    <div *ngIf="msg.sender === 'user'" class="flex justify-end">
+      <div class="flex items-start space-x-2 max-w-[80%] flex-row-reverse space-x-reverse">
+        <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+          👤
+        </div>
+        <div class="bg-blue-600 text-white rounded-lg p-3">
+          <p class="text-sm">{{ msg.text }}</p>
+          <p class="text-xs text-blue-100 mt-1">{{ msg.time }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-1. **Consistent bedtime routine** - Same activities in the same order every night
-2. **Check room environment** - Dark, cool (65-68°F), and quiet
-3. **Review nap schedule** - One nap around 12-1 PM, not too late
-4. **Comfort object** - A special blanket or stuffed animal
 
-How long has this been going on? Any recent changes in routine or environment?</p>
-                                    <p class="text-xs text-gray-500 mt-1">10:33 AM</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     
                     <!-- Input -->
                     <div class="flex-shrink-0 border-t border-gray-200 p-4">
                         <div class="flex space-x-2">
-                            <input
+                            <!-- <input
                                 type="text"
                                 placeholder="Ask me anything about parenting..."
                                 class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -79,16 +76,36 @@ How long has this been going on? Any recent changes in routine or environment?</
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                                 </svg>
-                            </button>
+                            </button> -->
+                            <input
+                                type="text"
+                                [(ngModel)]="userMessage"
+                                placeholder="Ask me anything about parenting..."
+                                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
+                                />
+                                <button (click)="sendMessage()" class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                                Send
+                                </button>
+                        </div>
+                    </div>
+                </div>
+                  <div class="bg-gray-50 rounded-lg border border-gray-200" style="margin-top: 50px;">
+                    <div class="p-4">
+                        <div class="flex items-start gap-2">
+                            <span class="text-gray-400 mt-1">🕐</span>
+                            <div class="text-xs text-gray-600">
+                                <p class="font-medium mb-1">Please remember:</p>
+                                <p>This AI assistant provides general guidance only. For medical emergencies or serious health concerns, always consult your pediatrician immediately.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Sidebar -->
-            <div class="space-y-6">
+            <div class="space-y-12" style="width: 300px;">
                 <!-- Quick Questions -->
-                <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                <div class="bg-white rounded-lg border border-gray-300 shadow-sm">
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-lg font-semibold flex items-center gap-2">
                             💡 Quick Questions
@@ -162,17 +179,7 @@ How long has this been going on? Any recent changes in routine or environment?</
                 </div>
 
                 <!-- Disclaimer -->
-                <div class="bg-gray-50 rounded-lg border border-gray-200">
-                    <div class="p-4">
-                        <div class="flex items-start gap-2">
-                            <span class="text-gray-400 mt-1">🕐</span>
-                            <div class="text-xs text-gray-600">
-                                <p class="font-medium mb-1">Please remember:</p>
-                                <p>This AI assistant provides general guidance only. For medical emergencies or serious health concerns, always consult your pediatrician immediately.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              
             </div>
         </div>
     </main>

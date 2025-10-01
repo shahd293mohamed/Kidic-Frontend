@@ -1,11 +1,11 @@
-
+<!-- 
  <div class="min-h-screen flex items-center justify-center p-4">
         <div class="max-w-md w-full">
            
 
-            <!-- Sign Up Form -->
+            <!-- Sign Up Form 
             <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-                 <!-- Header -->
+                 <!-- Header 
             <div class="text-center mb-8">
                 <div class="flex items-center justify-center space-x-3 mb-6">
                     <img src="kidcare-icon.jpg" alt="KidCare" class="w-12 h-12 rounded-full">
@@ -13,7 +13,7 @@
                 <h2 class="text-gradient text-3xl font-bold text-gray-900 mb-2">Start Your Journey</h2>
                 <p class="text-gray-600">Create your account and begin smarter parenting today</p>
             </div>
-                <!-- Account Type Selection -->
+                <!-- Account Type Selection 
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-3">I want to...</label>
                     <div class="grid grid-cols-2 gap-4">
@@ -37,7 +37,7 @@
                 </div>
 
                 <form class="space-y-6">
-                    <!-- Name -->
+                    <!-- Name 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
 
-                    <!-- Email -->
+                    <!-- Email 
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                         <input 
@@ -76,7 +76,7 @@
                         >
                     </div>
 
-                    <!-- Phone -->
+                    <!-- Phone 
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                         <input 
@@ -89,20 +89,20 @@
                         >
                     </div>
 
-                    <!-- Family Code (Hidden by default) -->
-                    <div id="family_code_section" class="hidden">
-                        <label for="family_code" class="block text-sm font-medium text-gray-700 mb-2">Family Code</label>
+                    <!-- Family Code (Hidden by default) 
+                    <div id="familyId_section" class="hidden">
+                        <label for="familyId" class="block text-sm font-medium text-gray-700 mb-2">Family Code</label>
                         <input 
                             type="text" 
-                            id="family_code" 
-                            name="family_code" 
+                            id="familyId" 
+                            name="familyId" 
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                             placeholder="Enter family code (e.g., FAM123456)"
                         >
                         <p class="text-sm text-gray-600 mt-1">Ask your family member for the character family code</p>
                     </div>
 
-                    <!-- Password -->
+                    <!-- Password 
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                         <input 
@@ -115,7 +115,7 @@
                         >
                     </div>
 
-                    <!-- Confirm Password -->
+                    <!-- Confirm Password 
                     <div>
                         <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
                         <input 
@@ -130,7 +130,7 @@
 
                    
 
-                    <!-- Sign Up Button -->
+                    <!-- Sign Up Button 
                     <button 
                         type="submit" 
                         class="w-full bt-gradient  text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
@@ -139,14 +139,14 @@
                     </button>
                 </form>
 
-                <!-- Divider -->
+                <!-- Divider 
                 <div class="my-8 flex items-center">
                     <div class="flex-1 border-t border-gray-300"></div>
                     <span class="px-4 text-sm text-gray-500">or sign up with</span>
                     <div class="flex-1 border-t border-gray-300"></div>
                 </div>
 
-                <!-- Social Sign Up -->
+                <!-- Social Sign Up 
                 <div class="grid grid-cols-2 gap-4">
                     <button class="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                         <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@
                     </button>
                 </div>
 
-                <!-- Sign In Link -->
+                
                 <div class="mt-8 text-center">
                     <p class="text-gray-600">
                         Already have an account? 
@@ -176,7 +176,7 @@
                 </div>
             </div>
 
-            <!-- Back to Home -->
+            
             <div class="text-center mt-6">
                 <a routerLink="/" class="text-gray-600 hover:text-gray-800 transition-colors flex items-center justify-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,4 +186,221 @@
                 </a>
             </div>
         </div>
+    </div> -->
+
+
+   <div class="min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-md w-full">
+    <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+      
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="flex items-center justify-center space-x-3 mb-6">
+          <img src="kidcare-icon.jpg" alt="KidCare" class="w-12 h-12 rounded-full">
+        </div>
+        <h2 class="text-gradient text-3xl font-bold text-gray-900 mb-2">
+          Start Your Journey
+        </h2>
+        <p class="text-gray-600">
+          Create your account and begin smarter parenting today
+        </p>
+      </div>
+
+      <!-- Reactive Form -->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+        <!-- Account Type Selection -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-3">I want to...</label>
+          <div class="grid grid-cols-2 gap-4">
+
+            <!-- New Family -->
+            <label class="relative">
+              <input 
+                type="radio" 
+                formControlName="account_type"
+                value="new_family" 
+                class="sr-only" 
+                (change)="onAccountTypeChange('new_family')"
+              >
+              <div
+                class="border-2 border-blue-200 bg-blue-50 rounded-lg p-4 cursor-pointer hover:border-blue-300 transition-colors text-center"
+                [class.border-blue-500]="signupForm.get('account_type')?.value === 'new_family'"
+              >
+                <div class="text-2xl mb-2">👨‍👩‍👧‍👦</div>
+                <div class="text-sm font-medium text-gray-900">Start New Family</div>
+                <div class="text-xs text-gray-600">Create a new account</div>
+              </div>
+            </label>
+
+            <!-- Join Family -->
+            <label class="relative">
+              <input 
+                type="radio" 
+                formControlName="account_type"
+                value="join_family" 
+                class="sr-only" 
+                (change)="onAccountTypeChange('join_family')"
+              >
+              <div
+                class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-blue-300 transition-colors text-center"
+                [class.border-blue-500]="signupForm.get('account_type')?.value === 'join_family'"
+              >
+                <div class="text-2xl mb-2">🔗</div>
+                <div class="text-sm font-medium text-gray-900">Join Family</div>
+                <div class="text-xs text-gray-600">Use family code</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- First & Last Name -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+            <input 
+              type="text" 
+              id="first_name"
+              formControlName="first_name"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="John"
+            >
+            <div *ngIf="signupForm.get('first_name')?.touched && signupForm.get('first_name')?.invalid" class="text-red-600 text-xs mt-1">
+              First name is required.
+            </div>
+          </div>
+
+          <div>
+            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+            <input 
+              type="text" 
+              id="last_name"
+              formControlName="last_name"
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              placeholder="Doe"
+            >
+            <div *ngIf="signupForm.get('last_name')?.touched && signupForm.get('last_name')?.invalid" class="text-red-600 text-xs mt-1">
+              Last name is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+          <input 
+            type="email" 
+            id="email"
+            formControlName="email"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="john.doe@example.com"
+          >
+          <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid" class="text-red-600 text-xs mt-1">
+            <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required.</span>
+            <span *ngIf="signupForm.get('email')?.errors?.['email']">Invalid email address.</span>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+          <input 
+            type="tel" 
+            id="phone"
+            formControlName="phone"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="+1 (555) 123-4567"
+          >
+          <div *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid" class="text-red-600 text-xs mt-1">
+            Phone number is required.
+          </div>
+        </div>
+
+        <!-- Family Code (Only if Joining) -->
+        <div *ngIf="isJoinFamily">
+          <label for="familyId" class="block text-sm font-medium text-gray-700 mb-2">Family Code</label>
+          <input 
+            type="text" 
+            id="familyId"
+            formControlName="familyId"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter family code (e.g., FAM123456)"
+          >
+          <div *ngIf="signupForm.get('familyId')?.touched && signupForm.get('familyId')?.invalid" class="text-red-600 text-xs mt-1">
+            Family code is required when joining a family.
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+          <div class="flex space-x-4">
+            <label>
+              <input type="radio" formControlName="gender" [value]="true"> Male
+            </label>
+            <label>
+              <input type="radio" formControlName="gender" [value]="false"> Female
+            </label>
+          </div>
+          <div *ngIf="signupForm.get('gender')?.touched && signupForm.get('gender')?.invalid" class="text-red-600 text-xs mt-1">
+            Gender selection is required.
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <input 
+            type="password" 
+            id="password"
+            formControlName="password"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Create a strong password"
+          >
+          <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-red-600 text-xs mt-1">
+            <span *ngIf="signupForm.get('password')?.errors?.['required']">Password is required.</span>
+            <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+          <input 
+            type="password" 
+            id="confirm_password"
+            formControlName="confirm_password"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Confirm your password"
+          >
+          <div *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirm_password')?.touched" class="text-red-600 text-xs mt-1">
+            Passwords do not match.
+          </div>
+        </div>
+
+        <!-- General Error Message -->
+        <div *ngIf="errorMessage" class="text-red-600 text-sm">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          [disabled]="loading || signupForm.invalid"
+          class="w-full bt-gradient text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+        >
+          <span *ngIf="!loading">{{ isJoinFamily ? 'Join Family' : 'Create Account' }}</span>
+          <span *ngIf="loading">Processing...</span>
+        </button>
+      </form>
+
+      <!-- Sign In Link -->
+      <div class="mt-8 text-center">
+        <p class="text-gray-600">
+          Already have an account? 
+          <a routerLink="/signin" class="text-blue-600 hover:text-blue-800 font-medium">Sign in here</a>
+        </p>
+      </div>
     </div>
+  </div>
+</div>
