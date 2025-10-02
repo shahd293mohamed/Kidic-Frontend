@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../Core/services/auth';
 import { CommonModule } from '@angular/common';
@@ -17,6 +17,13 @@ export class Header implements OnInit {
   }
     toggleDropdown() {
     this.showDropdown = !this.showDropdown;
+  }
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.profile-dropdown')) {
+      this.showDropdown = false;
+    }
   }
  signOut() {
   this._auth.logout(); 

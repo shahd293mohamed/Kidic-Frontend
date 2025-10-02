@@ -42,6 +42,18 @@ export interface GrowthRecord {
   status: 'ACHIEVED' | 'NOT_ACHIEVED';
   childId: number;
 }
+
+export interface Milestone {
+  id?: number;
+  childId: number;
+  title: string;
+  description?: string;
+  milestoneType: 'PHYSICAL' | 'COGNITIVE' | 'SOCIAL' | 'EMOTIONAL' | 'LANGUAGE';
+  expectedAgeMonths: number;
+  actualDate?: string; // YYYY-MM-DD
+  status?: 'PENDING' | 'COMPLETED' | 'OVERDUE';
+  isBuiltIn?: boolean;
+}
 export interface Review {
   id: number;
   content: string;

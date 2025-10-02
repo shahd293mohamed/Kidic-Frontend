@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { GrowthRecordService } from '../../Core/services/growth-record-service';
 import { MedicalRecordService } from '../../Core/services/medical-record-service';
 import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { VaccineService } from '../../Core/services/vaccine-service';
+import { MilestonesService } from '../../Core/services/milestones-service';
 
 @Component({
   selector: 'app-main',
@@ -31,7 +34,8 @@ export class Main implements OnInit {
   };
 
   constructor(private mainService: MainService, private router: Router,  private medicalRecordService: MedicalRecordService,
-    private growthRecordService: GrowthRecordService) {}
+    private growthRecordService: GrowthRecordService, 
+    private vaccineService: VaccineService ,private milestoneService: MilestonesService,private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.loadFamilyData();
@@ -124,10 +128,30 @@ export class Main implements OnInit {
   removeGrowthRecord(index: number) {
     this.growthRecords.splice(index, 1);
   }
-  saveChild() {
+saveChild() {
   this.mainService.addChild(this.newChild).subscribe({
     next: (createdChild) => {
       const childId = createdChild.id;
+
+      // ✅ Generate default vaccines automatically
+      this.vaccineService.generateDefaultVaccines(childId).subscribe({
+        next: () => {
+          console.log("Default vaccines generated for child:", childId);
+        },
+        error: (err) => {
+          console.error("Error generating default vaccines:", err);
+        }
+      });
+
+      // ✅ Generate default milestones automatically
+      this.milestoneService.generateBuiltInMilestones(childId).subscribe({
+        next: () => {
+          console.log("Default milestones generated for child:", childId);
+        },
+        error: (err) => {
+          console.error("Error generating default milestones:", err);
+        }
+      });
 
       // Prepare API calls
       const medicalCalls = this.medicalRecords.map(record =>
@@ -149,18 +173,22 @@ export class Main implements OnInit {
 
           console.log('Child and all records saved successfully');
 
-          this.closeAddChildForm(); // Close modal
+          this.closeAddChildForm();
+          this.toastr.success('Child added successfully!', 'Success');
         },
         error: (err) => {
           console.error('Error saving records:', err);
+          this.toastr.error('❌ Something went wrong. Please try again.', 'Error');
         }
       });
     },
     error: (err) => {
       console.error('Error creating child:', err);
+      this.toastr.error('❌ Something went wrong. Please try again.', 'Error');
     }
   });
 }
+
 
     viewChildProfile(childId: number) {
     this.router.navigate([`/dashboard/profile`]);

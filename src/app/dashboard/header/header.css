@@ -1,0 +1,18 @@
+.emergency{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+  border: 1px solid ;
+  cursor: pointer;
+  text-decoration: none;
+  height: 2.25rem;
+  border-radius: calc(var(--radius) - 2px);
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+
+}

@@ -3,7 +3,9 @@ import { MainService } from '../../Core/services/main_service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GrowthRecordService } from '../../Core/services/growth-record-service';
-import { GrowthRecord } from '../../Core/model';
+import { GrowthRecord, Milestone } from '../../Core/model';
+import { VaccineService } from '../../Core/services/vaccine-service';
+import { MilestonesService } from '../../Core/services/milestones-service';
 interface PercentileData {
   P3: number;
   P50: number;
@@ -34,32 +36,103 @@ const referenceWeights: Record<number, PercentileData> = {
   templateUrl: './tracker.html',
   styleUrl: './tracker.css'
 })
-export class Tracker implements AfterViewInit, OnInit  {
+export class Tracker implements OnInit  {
+  activeTab: string = 'milestones';
+
+setActiveTab(tab: string) {
+  this.activeTab = tab;
+}
+
    children: any[] = [];
     isLoading: boolean = true;
     errorMessage: string = '';
     selectedChild: number = 0;
     growthRecords: GrowthRecord[] = [];
+    milestones: Milestone[] = [];
 
+    vaccines: any[] = [];
+    newVaccine: any = { name: '', status: 'due', date: '' };
+    editingVaccine: any = null;
     newChild = {
     name: '',
     gender: true,
     dateOfBirth: '',
     medicalNotes: ''
   };
-heightPercentile: number | null = null;
-weightPercentile: number | null = null;
+  heightPercentile: number | null = null;
+  weightPercentile: number | null = null;
 
-  constructor(private renderer: Renderer2, private el: ElementRef, private mainService: MainService, private growthService: GrowthRecordService) {}
+  constructor(private renderer: Renderer2, private el: ElementRef, 
+    private mainService: MainService, private growthService: GrowthRecordService,
+     private vaccineService: VaccineService,private milestoneService: MilestonesService) {}
   ngOnInit(): void {
     this.loadFamilyData();
     this.loadGrowthRecords();
-     
+    this.loadVaccines();
+    this.loadMilestones()
+
   }
-latestHeight: number | undefined;
-latestWeight: number | undefined;
-lastUpdatedHeight: string = '';
-lastUpdatedWeight: string = '';
+
+    loadVaccines(): void {
+    this.vaccineService.getVaccinesByChild(this.selectedChild).subscribe({
+      next: (data) => {this.vaccines = data; console.log('child id shososo', this.selectedChild);},
+      error: (err) => console.error('Error loading vaccines', err)   });
+  }
+
+  recordVaccine(): void {
+  if (this.editingVaccine) {
+    // update existing vaccine
+    this.vaccineService.updateVaccine(this.editingVaccine.id, this.newVaccine).subscribe({
+      next: () => {
+        this.loadVaccines();
+        this.cancelEdit();
+        this.closeAddVaccineForm(); // Close modal after update
+      },
+      error: (err) => console.error('Error updating vaccine', err)
+    });
+  } else {
+    // add new vaccine
+    this.vaccineService.addVaccine(this.selectedChild, this.newVaccine).subscribe({
+      next: () => {
+        this.loadVaccines();
+        this.newVaccine = { name: '', status: 'due', date: '' }; // reset form
+        this.closeAddVaccineForm(); // Close modal after save
+      },
+      error: (err) => console.error('Error adding vaccine', err)
+    });
+  }
+}
+
+editVaccine(vaccine: any): void {
+  this.editingVaccine = vaccine;
+  this.newVaccine = { ...vaccine }; // copy values into form
+  this.openAddVaccineForm(); // Open modal for editing
+}
+
+cancelEdit(): void {
+  this.editingVaccine = null;
+  this.newVaccine = { name: '', status: 'due', date: '' };
+  this.closeAddVaccineForm();
+}
+
+closeAddVaccineForm(): void {
+  this.showAddVaccineForm = false;
+  this.editingVaccine = null;
+  this.newVaccine = { name: '', status: 'due', date: '' };
+}
+  deleteVaccine(vaccineId: number): void {
+    if (confirm('Are you sure you want to delete this vaccine?')) {
+      this.vaccineService.deleteVaccine(vaccineId).subscribe({
+        next: () => this.loadVaccines(),
+        error: (err) => console.error('Error deleting vaccine', err)
+      });
+    }
+  }
+
+  latestHeight: number | undefined;
+  latestWeight: number | undefined;
+  lastUpdatedHeight: string = '';
+  lastUpdatedWeight: string = '';
 
   calculateHeightPercentile(age: number, height: number): number | null {
   const ref = referenceHeights[age];
@@ -122,30 +195,6 @@ loadGrowthRecords(): void {
   });
 }
 
-
-    onAddMilestone(): void {
-    const newRecord: GrowthRecord = {
-      dateOfRecord: new Date().toISOString().split('T')[0],
-      type: 'PHYSICAL',
-      status: 'ACHIEVED',
-      additionalInfo: 'Started walking',
-      height: 80,
-      weight: 10,
-      childId: this.selectedChild
-    };
-
-this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
-  next: response => {
-    console.log('Milestone added:', response);
-    this.loadGrowthRecords();
-  },
-  error: err => {
-    console.error('Failed to add milestone:', err);
-
-  }
-});
-
-  }
   loadFamilyData() {
   this.isLoading = true;
   this.errorMessage = '';
@@ -161,6 +210,8 @@ this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
       if (this.children.length > 0) {
         this.selectedChild = this.children[0].id;
         this.loadGrowthRecords(); // ✅ Now it's safe to load
+        this.loadVaccines();
+        this.loadMilestones();
       }
 
       this.isLoading = false;
@@ -172,6 +223,13 @@ this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
     }
   });
 }
+loadMilestones() {
+    if (!this.selectedChild) return;
+    this.milestoneService.getmilestonesByChild(this.selectedChild).subscribe({
+      next: (data) => (this.milestones = data),
+      error: (err) => console.error('Error loading milestones:', err)
+    });
+  }
   calculateAge(dateOfBirth: string): number {
   const birthDate = new Date(dateOfBirth);
   const today = new Date();
@@ -187,83 +245,91 @@ this.growthService.addGrowthRecord(this.selectedChild, newRecord).subscribe({
   return age;
 }
 
-  ngAfterViewInit(): void {
-  const tabTriggers = this.el.nativeElement.querySelectorAll('.tab-trigger');
-  const tabContents = this.el.nativeElement.querySelectorAll('.tab-content');
-
-  tabTriggers.forEach((trigger: HTMLElement) => {
-    this.renderer.listen(trigger, 'click', () => {
-      const targetTab = trigger.getAttribute('data-tab');
-
-      if (!targetTab) return;
-
-      // Remove 'active' class from all tabs and contents
-      tabTriggers.forEach((t: HTMLElement) => t.classList.remove('active'));
-      tabContents.forEach((c: HTMLElement) => c.classList.remove('active'));
-
-      // Add 'active' to clicked button
-      trigger.classList.add('active');
-
-      // Find the matching content and activate it
-      const targetContent = this.el.nativeElement.querySelector(`#${targetTab}`);
-      if (targetContent) {
-        targetContent.classList.add('active');
-      } else {
-        console.error(`No content found for tab: ${targetTab}`);
-      }
-    });
-  });
-}
-
-
-showAddMilestoneForm = false;
-
-newMilestone = {
-  additionalInfo: '',
-  dateOfRecord: '',
-  type: 'PHYSICAL',
-  status: 'ACHIEVED',
-  height: null,
-  weight: null
-};
-
-openAddMilestoneForm(): void {
-  this.showAddMilestoneForm = true;
-}
-
-closeAddMilestoneForm(): void {
-  this.showAddMilestoneForm = false;
-}
-
-submitMilestone(): void {
-  if (!this.selectedChild || this.selectedChild <= 0) {
-    console.error('No child selected');
-    return;
-  }
-  const record: GrowthRecord = {
-    ...this.newMilestone,
-    type: this.newMilestone.type as 'PHYSICAL' | 'EMOTIONAL' | 'COGNITION',
-  status: this.newMilestone.status as 'ACHIEVED' | 'NOT_ACHIEVED',
-  height: this.newMilestone.height ?? undefined,
-  weight: this.newMilestone.weight ?? undefined,
-  childId: this.selectedChild
-
+newMilestone: Milestone = {
+    childId: 0,
+    title: '',
+    description: '',
+    milestoneType: 'PHYSICAL',
+    expectedAgeMonths: 0,
+    actualDate: '',
+    status: 'PENDING'
   };
 
-  this.growthService.addGrowthRecord(this.selectedChild, record).subscribe({
-    next: () => {
-      this.loadGrowthRecords();
-      this.closeAddMilestoneForm();
-    },
-   error: err => {
-  console.error('Failed to add milestone:', err);
-  console.error('Full error:', JSON.stringify(err, null, 2));
-}
-  });
-}
+showAddMilestoneForm = false;
+showAddVaccineForm = false;
+
+openAddMilestoneForm() { this.showAddMilestoneForm = true; }
+closeAddMilestoneForm() { this.showAddMilestoneForm = false; }
+
+openAddVaccineForm() { this.showAddVaccineForm = true; }
+//   if (!this.selectedChild || this.selectedChild <= 0) {
+//     console.error('No child selected');
+//     return;
+//   }
+//   const record: GrowthRecord = {
+//     ...this.newMilestone,
+//     type: this.newMilestone.type as 'PHYSICAL' | 'EMOTIONAL' | 'COGNITION',
+//   status: this.newMilestone.status as 'ACHIEVED' | 'NOT_ACHIEVED',
+//   height: this.newMilestone.height ?? undefined,
+//   weight: this.newMilestone.weight ?? undefined,
+//   childId: this.selectedChild
+
+//   };
+
+//   this.growthService.addGrowthRecord(this.selectedChild, record).subscribe({
+//     next: () => {
+//       this.loadGrowthRecords();
+//       this.closeAddMilestoneForm();
+//     },
+//    error: err => {
+//   console.error('Failed to add milestone:', err);
+//   console.error('Full error:', JSON.stringify(err, null, 2));
+// }
+//   });
+// }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+submitMilestone(): void {
+    if (!this.selectedChild || this.selectedChild <= 0) {
+      console.error('No child selected');
+      return;
+    }
+
+    const record: Milestone = {
+      ...this.newMilestone,
+      childId: this.selectedChild
+    };
+
+    this.milestoneService.createMilestone(record).subscribe({
+      next: () => {
+        this.loadMilestones();
+        this.closeAddMilestoneForm(); // close modal
+        console.log('Milestone added successfully');
+      },
+      error: (err) => {
+        console.error('Failed to add milestone:', err);
+        console.error('Full error:', JSON.stringify(err, null, 2));
+      }
+    });
+  }
+
+  completeMilestone(m: Milestone) {
+    this.milestoneService.markAsCompleted(m.id!, new Date().toISOString().split('T')[0]).subscribe({
+      next: () => this.loadMilestones(),
+      error: (err) => console.error('Error completing milestone:', err)
+    });
+  }
+
+  deleteMilestone(id: number) {
+    this.milestoneService.deleteMilestone(id).subscribe({
+      next: () => this.loadMilestones(),
+      error: (err) => console.error('Error deleting milestone:', err)
+    });
+  }
 onChildChange(newChildId: number): void {
   this.selectedChild = newChildId;
   this.loadGrowthRecords(); 
+  this.loadVaccines(); 
+  this.loadMilestones();
 }
 
 }

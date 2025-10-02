@@ -4,6 +4,7 @@ import { MainService } from '../../Core/services/main_service';
 import { Auth } from '../../Core/services/auth';
 import { DecodedToken } from '../../Core/model';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,7 @@ export class Profile implements OnInit {
   parent: any = null;
   familyId : any = null;
   
-  constructor(private mainService: MainService, private _auth: Auth) {}
+  constructor(private mainService: MainService, private _auth: Auth, private toastr: ToastrService) {}
   ngOnInit(): void {
     this.mainService.getFamily().subscribe((familyData: any) => {
       this.children = familyData.children;
@@ -59,9 +60,11 @@ saveChild(child: any) {
     next: (res) => {
       console.log('Child updated successfully:', res);
       this.toggleChildEdit(child.id);
+      this.toastr.success('Child updated successfully!', 'Success');
     },
     error: (err) => {
       console.error('Error updating child:', err);
+      this.toastr.error('❌ Something went wrong. Please try again.', 'Error');
     }
   });
 }
@@ -71,9 +74,11 @@ saveChild(child: any) {
     next: (res) => {
       console.log('Parent updated successfully:', res);
       this.parentEditMode = false;
+      this.toastr.success('Parent updated successfully!', 'Success');
     },
     error: (err) => {
       console.error('Error updating parent:', err);
+      this.toastr.error('❌ Something went wrong. Please try again.', 'Error');
     }
   });
 }
@@ -106,9 +111,12 @@ deleteChild(id: number) {
       next: (res) => {
         console.log('Child deleted:', res);
         this.children = this.children.filter(c => c.id !== id);
+        this.toastr.success('Child deleted successfully!', 'Success');
+
       },
       error: (err) => {
         console.error('Error deleting child:', err);
+        this.toastr.error('❌ Something went wrong. Please try again.', 'Error');
       }
     });
   }

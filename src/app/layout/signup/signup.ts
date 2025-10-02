@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Auth } from '../../Core/services/auth'; // adjust path to your service
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,8 @@ export class Signup implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -68,11 +70,15 @@ export class Signup implements OnInit {
         next: (res) => {
           this.loading = false;
           console.log('New family signup successful:', res);
-          this.router.navigate(['/signin']); 
+         this.toastr.success('Signup successful!', 'Success');
+        setTimeout(() => {
+          this.router.navigate(['/signin']);
+        }, 500);
         },
         error: (err) => {
           this.loading = false;
           this.errorMessage = err.error?.message || 'Signup failed. Please try again.';
+          this.toastr.error(this.errorMessage, 'Error');
           console.error('New family signup error:', err);
         }
       });
@@ -83,11 +89,13 @@ export class Signup implements OnInit {
         next: (res) => {
           this.loading = false;
           console.log('Joined existing family successfully:', res);
+          this.toastr.success('Signup successful!', 'Success');
           this.router.navigate(['/signin']); 
         },
         error: (err) => {
           this.loading = false;
           this.errorMessage = err.error?.message || 'Signup failed. Please try again.';
+          this.toastr.error(this.errorMessage, 'Error');
           console.error('Join family signup error:', err);
           console.log(signupData);
         }

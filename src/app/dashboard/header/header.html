@@ -6,45 +6,43 @@
           KIDIC
         </h1>
       </div>
-                <nav class="hidden md:flex items-center space-x-8">
+                <nav class="hidden md:flex items-center space-x-4">
                     <a routerLink="/dashboard" class="text-gray-600 hover:text-gray-900 transition-colors">📊 Dashboard</a>
                     <a routerLink="/dashboard/tracker" class="text-gray-600 hover:text-gray-900 transition-colors">📈 Track Progress</a>
                     <a routerLink="/dashboard/learning" class="text-gray-600 hover:text-gray-900 transition-colors">🎓 Learn & Play</a>
                     <a routerLink="/dashboard/doctors" class="text-gray-600 hover:text-gray-900 transition-colors">👨‍⚕️ Find Doctors</a>
-                    <a routerLink="/dashboard/chatbot" class="text-gray-600 hover:text-gray-900 transition-colors">🤖 Ask AI</a>
-                    <!-- <a routerLink="/shop" class="text-gray-600 hover:text-gray-900 transition-colors">🛍️ Shop</a> -->
-                     <a routerLink="/dashboard/contactus" class="text-gray-600 hover:text-gray-900 transition-colors">⚙️ Contact us</a>
+                    <!-- <a routerLink="/dashboard/chatbot" class="text-gray-600 hover:text-gray-900 transition-colors">🤖 Ask AI</a> -->
+                    <a routerLink="dashboard/shop" class="text-gray-600 hover:text-gray-900 transition-colors">Shop</a>
+                    <a routerLink="/dashboard/meal" class="text-gray-600 hover:text-gray-900 transition-colors">Meals</a>
+                     <a routerLink="/dashboard/contactus" class="text-gray-600 hover:text-gray-900 transition-colors">Contact us</a>
                 </nav>
           <div class="flex items-center space-x-4">
-  <a routerLink="/dashboard/emergency" class="btn btn-destructive btn-sm">🚨 Emergency</a>
+        <a routerLink="/dashboard/emergency" class="emergency bg-red-50 border-red-200 text-red-700 hover:bg-red-100 btn-sm">🚨 Emergency</a>
 
-  <a routerLink="/dashboard/notifications" class="relative p-2 text-gray-600 hover:text-gray-900">
-    <i class="fa-solid fa-bell"></i>
-    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
-  </a>
+        <a routerLink="/dashboard/notifications" class="relative p-2 text-gray-600 hover:text-gray-900">
+          <i class="fa-solid fa-bell"></i>
+          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+        </a>
 
-  <!-- Profile Dropdown -->
-  <div class="relative" (click)="showDropdown = true">
-    <button (click)="toggleDropdown()" class="p-0 h-auto">
-      <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
-        <span class="text-sm font-medium text-blue-600">SJ</span>
-      </div>
-    </button>
+          <div class="relative profile-dropdown">
+            <button (click)="toggleDropdown()" class="p-0 h-auto">
+              <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                <span class="text-sm font-medium text-blue-600">SJ</span>
+              </div>
+            </button>
 
-    <!-- Dropdown menu -->
-    <div *ngIf="showDropdown" class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-      <a routerLink="/dashboard/profile" 
-         class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-        👤 Profile
-      </a>
-      <button (click)="signOut()" 
-              class="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100">
-        🚪 Logout
-      </button>
-    </div>
-  </div>
-</div>
-
+            <!-- Dropdown menu -->
+            <div *ngIf="showDropdown" class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+              <a routerLink="/dashboard/profile" 
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                👤 Profile
+              </a>
+              <button (click)="signOut()" 
+                      class="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                🚪 Logout
+              </button>
+            </div>
+          </div>
         </div>
 
 

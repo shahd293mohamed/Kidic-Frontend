@@ -14,6 +14,7 @@ import { MedicalRecord } from './dashboard/medical-record/medical-record';
 import { Notifications } from './dashboard/notifications/notifications';
 import { Contactus } from './dashboard/contactus/contactus';
 import { Educational } from './dashboard/educational/educational';
+import { Meals } from './dashboard/meals/meals';
 
 export const routes: Routes = [
     {path: '', component:Layout},
@@ -30,7 +31,8 @@ export const routes: Routes = [
         {path:'test',component:MedicalRecord},
         {path:'notifications',component:Notifications},
         {path:'contactus', component:Contactus},
-        {path:'learning',component:Educational}
+        {path:'learning',component:Educational},
+        {path:'meal',component:Meals}
     ]}
 
 ];

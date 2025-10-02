@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ChatbotService } from '../../Core/services/chatbot-service';
 import { FormsModule } from '@angular/forms';
 import {Message} from '../../Core/model';
@@ -11,9 +11,15 @@ import { MarkdownModule } from 'ngx-markdown';
   templateUrl: './chatbot.html',
   styleUrl: './chatbot.css'
 })
-export class Chatbot implements AfterViewChecked {
+export class Chatbot implements AfterViewChecked , OnInit{
 userMessage: string = '';
   messages: Message[] = [];
+  ngOnInit() {
+  const savedMessages = localStorage.getItem('chatMessages');
+  if (savedMessages) {
+    this.messages = JSON.parse(savedMessages);
+  }
+}
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
 
@@ -30,39 +36,78 @@ userMessage: string = '';
     } catch (err) {}
   }
 
+  // sendMessage() {
+  //   if (!this.userMessage.trim()) return;
+
+  //   // Add user message
+  //   const userMsg: Message = {
+  //     sender: 'user',
+  //     text: this.userMessage,
+  //     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  //   };
+  //   this.messages.push(userMsg);
+
+  //   // Call backend
+  //   this.chatbotService.sendMessage(this.userMessage, 1).subscribe({
+  //     next: (response) => {
+  //       console.log('Bot response:', response.answer);
+  //       const botMsg: Message = {
+  //         sender: 'bot',
+  //         text: response.answer,
+  //         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  //       };
+  //       this.messages.push(botMsg);
+  //     },
+  //     error: () => {
+  //       const botMsg: Message = {
+  //         sender: 'bot',
+  //         text: "⚠️ Sorry, something went wrong.",
+  //         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  //       };
+  //       this.messages.push(botMsg);
+  //     }
+  //   });
+
+  //   this.userMessage = '';
+  // }
   sendMessage() {
-    if (!this.userMessage.trim()) return;
+  if (!this.userMessage.trim()) return;
 
-    // Add user message
-    const userMsg: Message = {
-      sender: 'user',
-      text: this.userMessage,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    this.messages.push(userMsg);
+  const userMsg: Message = {
+    sender: 'user',
+    text: this.userMessage,
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  };
+  this.messages.push(userMsg);
 
-    // Call backend
-    this.chatbotService.sendMessage(this.userMessage, 1).subscribe({
-      next: (response) => {
-        console.log('Bot response:', response.answer);
-        const botMsg: Message = {
-          sender: 'bot',
-          text: response.answer,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        this.messages.push(botMsg);
-      },
-      error: () => {
-        const botMsg: Message = {
-          sender: 'bot',
-          text: "⚠️ Sorry, something went wrong.",
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        this.messages.push(botMsg);
-      }
-    });
+  this.saveMessages(); // ✅ Save to local storage
 
-    this.userMessage = '';
-  }
+  this.chatbotService.sendMessage(this.userMessage, 1).subscribe({
+    next: (response) => {
+      const botMsg: Message = {
+        sender: 'bot',
+        text: response.answer,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      this.messages.push(botMsg);
+      this.saveMessages(); // ✅ Save again after bot reply
+    },
+    error: () => {
+      const botMsg: Message = {
+        sender: 'bot',
+        text: "⚠️ Sorry, something went wrong.",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      this.messages.push(botMsg);
+      this.saveMessages();
+    }
+  });
+
+  this.userMessage = '';
+}
+
+saveMessages() {
+  localStorage.setItem('chatMessages', JSON.stringify(this.messages));
+}
 }
 

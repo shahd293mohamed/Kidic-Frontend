@@ -1,0 +1,138 @@
+<section class="page-header">
+  <div class="container">
+    <div class="page-title-section">
+      <div class="page-title">
+        <h1>🍽️ Meal Planner</h1>
+        <p>Healthy and delicious meal ideas for your little ones</p>
+      </div>
+
+      <div class="header-actions">
+        <select [(ngModel)]="selectedChildId" (change)="loadMeals()" class="filter-select">
+          <option *ngFor="let child of children" [value]="child.id">
+            {{ child.name }} ({{ calculateAge(child.dateOfBirth) }} yrs)
+          </option>
+        </select>
+
+        <button class="btn btn-primary" (click)="showAdd = !showAdd">
+          <i class="fa-solid fa-plus"></i> Add Meal
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <!-- Add Meal Form -->
+  <div *ngIf="showAdd" class="modal-overlay">
+    <div class="modal-card">
+      <h2>Add New Meal</h2>
+      <div class="form-group">
+        <label>Meal Title</label>
+        <input [(ngModel)]="newMeal.title" placeholder="Meal Title" />
+      </div>
+      <div class="form-group">
+        <label>Ingredients</label>
+        <input [(ngModel)]="newMeal.ingredients" placeholder="Ingredients" />
+      </div>
+      <div class="form-group">
+        <label>Recipe</label>
+        <textarea [(ngModel)]="newMeal.recipe" placeholder="Recipe"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" (click)="addMeal()">Save</button>
+        <button class="btn-secondary" (click)="showAdd = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meal Grid -->
+  <div *ngIf="meals && meals.length > 0; else noMeals" class="meal-grid">
+    <div *ngFor="let meal of meals" class="meal-card">
+      <div class="meal-image">
+        {{ getRandomDecoration(meal).emoji }}
+        <span class="meal-badge">{{ getRandomDecoration(meal).badge }}</span>
+      </div>
+
+      <div class="meal-content">
+        <div class="meal-header">
+          <h3 class="meal-title">{{ meal.title }}</h3>
+        </div>
+        <p class="meal-description">{{ meal.recipe }}</p>
+        <div class="meal-tags">
+          <span class="tag">{{ meal.ingredients }}</span>
+        </div>
+        <div class="meal-footer">
+          <button class="btn btn-outline btn-sm" (click)="editMeal(meal)">
+            <i class="fa-solid fa-pen"></i> Edit
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="deleteMeal(meal.id)">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noMeals>
+    <p class="text-center">No meals planned for this child yet.</p>
+  </ng-template>
+
+  <!-- Edit Modal -->
+  <div *ngIf="editingMeal" class="modal">
+    <div class="modal-card">
+      <h2>Edit Meal</h2>
+      <div class="form-group">
+        <label>Meal Title</label>
+        <input [(ngModel)]="editingMeal.title" placeholder="Meal Title" />
+      </div>
+      <div class="form-group">
+        <label>Ingredients</label>
+        <input [(ngModel)]="editingMeal.ingredients" placeholder="Ingredients" />
+      </div>
+      <div class="form-group">
+        <label>Recipe</label>
+        <textarea [(ngModel)]="editingMeal.recipe" placeholder="Recipe"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" (click)="updateMeal()">Update</button>
+        <button class="btn-secondary" (click)="editingMeal = null">Cancel</button>
+      </div>
+    </div>
+  </div>
+   <div class="tips-section">
+            <h2>
+                <i class="fa-solid fa-lightbulb"></i>
+                Nutrition Tips for Kids
+            </h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>
+                        <i class="fa-solid fa-apple-whole"></i>
+                        Balanced Diet
+                    </h3>
+                    <p>Include a variety of fruits, vegetables, whole grains, and proteins in your child's meals for optimal growth and development.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>
+                        <i class="fa-solid fa-clock"></i>
+                        Regular Mealtimes
+                    </h3>
+                    <p>Establish consistent meal and snack times to help regulate your child's appetite and create healthy eating habits.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>
+                        <i class="fa-solid fa-droplet"></i>
+                        Stay Hydrated
+                    </h3>
+                    <p>Encourage water intake throughout the day. Limit sugary drinks and opt for milk, water, or diluted fruit juices.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>
+                        <i class="fa-solid fa-utensils"></i>
+                        Portion Control
+                    </h3>
+                    <p>Serve age-appropriate portions and let your child ask for more rather than overwhelming them with large servings.</p>
+                </div>
+            </div>
+        </div>
+</main>

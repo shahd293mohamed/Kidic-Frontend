@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ContactusService } from '../../Core/services/contactus-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contactus',
@@ -17,7 +18,7 @@ export class Contactus {
   stars: number = 0; 
   successMessage: string = '';
 
-  constructor(private contactusService: ContactusService) {}
+  constructor(private contactusService: ContactusService, private toastr: ToastrService) {}
 
   toggleFaq(index: number): void {
     this.activeIndex = this.activeIndex === index ? null : index;
@@ -51,9 +52,11 @@ export class Contactus {
       this.message = '';
       this.subject = '';
       this.stars = 0;
+      this.toastr.success('✅ Thank you! Your message has been sent successfully.', 'Success');
     },
     error: (err) => {
       console.error('Error sending message', err);
+      this.toastr.error('❌ Something went wrong. Please try again.', 'Error');
     }
   });
 }
