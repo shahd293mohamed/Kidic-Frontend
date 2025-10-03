@@ -1,7 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../../Core/services/auth';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../Core/services/notification-service';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +12,17 @@ import { CommonModule } from '@angular/common';
 })
 export class Header implements OnInit {
   showDropdown: boolean = false;
-  constructor(private _auth:Auth, private _router:Router) { }
+  unreadCount: number = 0;
+
+  constructor(private _auth:Auth, private _router:Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.notificationService.unreadCount$.subscribe(count => {
+      this.unreadCount = count;
+      console.log('Unread notifications:', count);
+    });
   }
+
     toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }

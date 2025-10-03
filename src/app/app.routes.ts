@@ -15,14 +15,15 @@ import { Notifications } from './dashboard/notifications/notifications';
 import { Contactus } from './dashboard/contactus/contactus';
 import { Educational } from './dashboard/educational/educational';
 import { Meals } from './dashboard/meals/meals';
+import { authGuard } from './Core/guards/auth-guard';
 
 export const routes: Routes = [
     {path: '', component:Layout},
     {path: 'signin', component: Signin},
     {path: 'signup', component: Signup},
-    {path: 'dashboard', component: Dashboard, children:[
+    {path: 'dashboard', component: Dashboard, canActivate:[authGuard] , children:[
         { path: '', redirectTo: 'main', pathMatch: 'full' },
-        {path:'main', component:Main},
+        {path:'main', component:Main,canActivate:[authGuard]},
         {path: 'profile', component:Profile},
         {path:'chatbot',component:Chatbot},
         {path: 'doctors', component:Doctors},

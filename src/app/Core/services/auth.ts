@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { Ilogin, IloginRes, DecodedToken } from '../model';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class Auth {
   private isAuth = new BehaviorSubject<DecodedToken | null>(this.islogedin());
   public isAuth$ = this.isAuth.asObservable();
 
-  private url = 'http://localhost:8080/api/auth';
+  private url = environment.apiUrl +'/auth';
   private token_key = 'token';
 
   initAuth() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { NotificationService, Notification } from '../../Core/services/notification-service';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Notifications implements OnInit, OnDestroy {
   notifications: Notification[] = []; 
+  // @Output() unreadCountChanged = new EventEmitter<number>();
   private subscription: Subscription = new Subscription();
 
   constructor(private notificationService: NotificationService) {}
@@ -37,15 +38,22 @@ export class Notifications implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.notificationService.disconnect();
   }
+  
   getUnreadCount(): number {
     return this.notifications.filter(n => !n.isRead).length;
   }
+
+  // private emitUnreadCount() {
+  //   this.unreadCountChanged.emit(this.getUnreadCount());
+  // }
+
 
   markAsRead(notificationId: number): void {
     this.notificationService.markAsRead(notificationId).subscribe(() => {
       this.notifications = this.notifications.map(n =>
         n.id === notificationId ? { ...n, isRead: true } : n
       );
+      // this.emitUnreadCount();
     });
   }
 }

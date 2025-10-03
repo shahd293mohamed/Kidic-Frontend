@@ -125,18 +125,17 @@ closeAddMealForm() {
     });
 
   }
-  calculateAge(dateOfBirth: string): number {
-  const birthDate = new Date(dateOfBirth);
-  const today = new Date();
+    getAge(dateOfBirth: string): string {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    const diff = today.getTime() - birthDate.getTime();
+    const ageDate = new Date(diff);
+    const years = ageDate.getUTCFullYear() - 1970;
+    const months = ageDate.getUTCMonth();
 
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-  const dayDiff = today.getDate() - birthDate.getDate();
-
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--;
+    if (years > 0) {
+      return `${years} year${years > 1 ? 's' : ''}`;
+    }
+    return `${months} month${months > 1 ? 's' : ''}`;
   }
-
-  return age;
-}
 }

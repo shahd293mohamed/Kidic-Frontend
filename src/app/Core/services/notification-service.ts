@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, from, of } from 'rxjs';
+import { Observable, BehaviorSubject, from, of, tap } from 'rxjs';
 import { Client, IMessage, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { environment } from '../../../environments/environment';
 
 export interface Notification {
   id: number;
@@ -17,18 +18,36 @@ export interface Notification {
   providedIn: 'root'
 })
 export class NotificationService {
-  private baseUrl = 'http://localhost:8080/api/notifications';
+  private baseUrl =  environment.apiUrl +'/notifications';
   private stompClient: Client | null = null;
 
   private notificationsSubject = new BehaviorSubject<Notification[]>([]);
   notifications$ = this.notificationsSubject.asObservable();
+  private unreadCountSubject = new BehaviorSubject<number>(0);
+  unreadCount$ = this.unreadCountSubject.asObservable();
+
+// helper to update unread count
+    private updateUnreadCount() {
+      const current = this.notificationsSubject.value;
+      const count = current.filter(n => !n.isRead).length;
+      this.unreadCountSubject.next(count);
+    }
 
   constructor(private http: HttpClient) {}
 
 
+  // getUserNotifications(parentId: number): Observable<Notification[]> {
+  //   return this.http.get<Notification[]>(`${this.baseUrl}/${parentId}`);
+  //   this.updateUnreadCount(); 
+  // }
   getUserNotifications(parentId: number): Observable<Notification[]> {
-    return this.http.get<Notification[]>(`${this.baseUrl}/${parentId}`);
-  }
+  return this.http.get<Notification[]>(`${this.baseUrl}/${parentId}`).pipe(
+    tap(notifications => {
+      this.notificationsSubject.next(notifications); // update notifications
+      this.updateUnreadCount();                       // update unread count
+    })
+  );
+}
 
   getUnreadNotifications(parentId: number): Observable<Notification[]> {
     return this.http.get<Notification[]>(`${this.baseUrl}/unread/${parentId}`);
@@ -36,6 +55,7 @@ export class NotificationService {
 
   markAsRead(notificationId: number): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${notificationId}/read`, {});
+    this.updateUnreadCount();
   }
 
   markAllAsRead(parentId: number): Observable<void> {
@@ -81,6 +101,7 @@ export class NotificationService {
 
           const current = this.notificationsSubject.value;
           this.notificationsSubject.next([newNotification, ...current]);
+          this.updateUnreadCount();
         }
       });
     };

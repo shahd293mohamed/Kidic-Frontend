@@ -41,7 +41,7 @@
             <!-- Profile Card -->
             <div class="card">
               <div class="card-header text-center" style="flex-direction: column;">
-                <div class="avatar mb-4">SJ</div>
+                <div class="avatar mb-4">{{ getInitials(parent.name) }}</div>
                 <h2 class="card-title">{{parent.name}}</h2>
                 <p class="text-gray-600">Parent</p>
                 <span class="badge badge-secondary mt-2">Family Code: {{familyId}}</span>
@@ -87,30 +87,7 @@
                     <p class="text-gray-600">123 Main Street, City, State 12345</p>
                   </div>
                 </div>
-
-                <!-- Edit Mode -->
-                <!-- <form *ngIf="parentEditMode" class="edit-form md:grid-cols-2">
-                  <div class="form-group">
-                    <label class="label">Full Name</label>
-                    <input class="input" value="{{parent.name}}" />
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Email</label>
-                    <input class="input" type="email" value="{{parent.email}}" />
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Phone Number</label>
-                    <input class="input" value="{{parent.phone}}" />
-                  </div>
-                  <div class="form-group" style="grid-column: 1 / -1;">
-                    <label class="label">Address</label>
-                    <textarea class="textarea">123 Main Street, City, State 12345</textarea>
-                  </div>
-                  <div class="form-actions">
-                    <button class="btn btn-primary" type="submit">Save Changes</button>
-                    <button class="btn btn-outline" type="button" (click)="toggleParentEdit()">Cancel</button>
-                  </div>
-                </form> -->
+        
                 <form *ngIf="parentEditMode" class="edit-form md:grid-cols-2" (ngSubmit)="saveParent()">
                 <div class="form-group">
                   <label class="label">Full Name</label>
@@ -172,7 +149,7 @@
                 </svg>
                 <span>{{ childEditMode[i] ? 'Cancel' : 'Edit' }}</span>
               </button>
-              <button
+              <!-- <button
                 class="btn btn-small bg-red-500 text-white hover:bg-red-300"
                 (click)="deleteChild(child.id)"
               >
@@ -185,7 +162,7 @@
                   />
                 </svg>
                 <span> Delete</span>
-              </button>
+              </button> -->
               </div>
             </div>
           </div>
@@ -198,7 +175,7 @@
           {{ getInitials(child.name) }}
         </div>
         <p class="font-medium">{{ getAge(child.dateOfBirth) }} old</p>
-        <p class="text-sm text-gray-600">{{ child.gender }}</p>
+        <p class="text-sm text-gray-600">{{ child.gender? 'Boy' : 'Girl' }}</p>
       </div>
 
       <div class="child-stats">

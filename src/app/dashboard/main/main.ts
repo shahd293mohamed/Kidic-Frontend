@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../Core/services/main_service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GrowthRecordService } from '../../Core/services/growth-record-service';
@@ -9,10 +9,11 @@ import { forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { VaccineService } from '../../Core/services/vaccine-service';
 import { MilestonesService } from '../../Core/services/milestones-service';
+import { Milestone } from '../../Core/model';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './main.html',
   styleUrls: ['./main.css']
 })
@@ -21,6 +22,7 @@ export class Main implements OnInit {
   children: any[] = [];
   isLoading: boolean = true;
   errorMessage: string = '';
+  upcomingMilestones: { childName: string; milestone: Milestone }[] = [];
 
   showAddChildForm: boolean = false;
   medicalRecords: any[] = [];
@@ -39,6 +41,7 @@ export class Main implements OnInit {
 
   ngOnInit(): void {
     this.loadFamilyData();
+    this.loadUpcomingMilestones();
   }
 
  
@@ -58,12 +61,33 @@ export class Main implements OnInit {
         }));
 
         this.isLoading = false;
+        this.loadUpcomingMilestones();
       },
       error: (err) => {
         console.error("Error fetching family data:", err);
         this.errorMessage = 'Failed to load family information.';
         this.isLoading = false;
       }
+    });
+  }
+
+   loadUpcomingMilestones() {
+    this.upcomingMilestones = [];
+    this.children.forEach(child => {
+      this.milestoneService.getmilestonesByChild(child.id).subscribe(milestones => {
+        // Get first milestone that is not completed
+        const nextMilestone = milestones.find(m => m.status !== 'COMPLETED');
+        if (nextMilestone) {
+          this.upcomingMilestones.push({
+            childName: child.name,
+            milestone: nextMilestone
+          });
+          console.log("Upcoming milestones:", this.upcomingMilestones);
+          
+        }
+        console.log("hello")
+        
+      });
     });
   }
 
@@ -113,7 +137,6 @@ export class Main implements OnInit {
     this.medicalRecords.splice(index, 1);
   }
 
-  // Manage growth records
   addGrowthRecord() {
     this.growthRecords.push({
       dateOfRecord: new Date().toISOString().substring(0, 10),
@@ -132,8 +155,6 @@ saveChild() {
   this.mainService.addChild(this.newChild).subscribe({
     next: (createdChild) => {
       const childId = createdChild.id;
-
-      // ✅ Generate default vaccines automatically
       this.vaccineService.generateDefaultVaccines(childId).subscribe({
         next: () => {
           console.log("Default vaccines generated for child:", childId);

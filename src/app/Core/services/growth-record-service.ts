@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GrowthRecord } from '../model';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrowthRecordService {
-  private apiUrl = 'http://localhost:8080/api/growth-records';
+  private apiUrl =  environment.apiUrl +'/growth-records';
 
   constructor(private http: HttpClient) {}
 

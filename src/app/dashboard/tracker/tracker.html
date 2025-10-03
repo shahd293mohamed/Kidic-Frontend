@@ -15,7 +15,7 @@
         class="select-trigger"
       >
         <option *ngFor="let child of children" [value]="child.id">
-          {{ child.name }} ({{ child.age }} years)
+          {{ child.name }} ({{ getAge(child.dateOfBirth) }} years)
         </option>
       </select>
     </div>

@@ -9,7 +9,7 @@
       <div class="header-actions">
         <select [(ngModel)]="selectedChildId" (change)="loadMeals()" class="filter-select">
           <option *ngFor="let child of children" [value]="child.id">
-            {{ child.name }} ({{ calculateAge(child.dateOfBirth) }} yrs)
+            {{ child.name }} ({{ getAge(child.dateOfBirth) }} yrs)
           </option>
         </select>
 
