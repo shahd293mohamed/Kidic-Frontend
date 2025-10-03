@@ -1,4 +1,4 @@
 export const environment ={
-    apiURL: 'https://kidic-render.onrender.com',
+    apiUrl: 'https://kidic-render.onrender.com',
     production: true,
 };
